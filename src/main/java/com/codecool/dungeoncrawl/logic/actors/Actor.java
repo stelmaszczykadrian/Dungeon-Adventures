@@ -5,7 +5,7 @@ import com.codecool.dungeoncrawl.logic.Drawable;
 import com.codecool.dungeoncrawl.logic.GameMap;
 
 public abstract class Actor implements Drawable {
-    private Cell cell;
+    Cell cell;
     private int health = 10;
 
     public Actor(Cell cell) {
@@ -13,15 +13,7 @@ public abstract class Actor implements Drawable {
         this.cell.setActor(this);
     }
 
-    public void move(int dx, int dy) {
-        GameMap map =cell.getGameMap();
-        if(map.getCollideList().contains(map.getCell(map.getPlayer().getX()+dx,map.getPlayer().getY()+dy).getType())) return;
-
-        Cell nextCell = cell.getNeighbor(dx, dy);
-        cell.setActor(null);
-        nextCell.setActor(this);
-        cell = nextCell;
-
+    public void move() {
     }
 
     public int getHealth() {
