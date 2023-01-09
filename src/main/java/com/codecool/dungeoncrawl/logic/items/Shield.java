@@ -9,6 +9,6 @@ public class Shield extends Item {
 
     @Override
     public String getTileName() {
-        return null;
+        return "shield";
     }
 }
