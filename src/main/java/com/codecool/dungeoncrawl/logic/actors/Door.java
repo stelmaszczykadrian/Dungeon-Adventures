@@ -14,6 +14,8 @@ public class Door extends Actor{
 
     public Door(Cell cell) {
         super(cell);
+        setHealth(99999999);
+        setAttack(0);
     }
     @Override
     public String getTileName() {

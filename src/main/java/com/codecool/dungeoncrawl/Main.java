@@ -29,6 +29,7 @@ public class Main extends Application {
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
     Label itemsLabel = new Label();
+    Label attackLabel = new Label();
 
     public static void main(String[] args) {
         launch(args);
@@ -42,8 +43,10 @@ public class Main extends Application {
 
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
-        ui.add(new Label("Inventory: "), 0, 1);
-        ui.add(itemsLabel, 0, 2);
+        ui.add(new Label("Attack: "), 0, 1);
+        ui.add(attackLabel, 1, 1);
+        ui.add(new Label("Inventory: "), 0, 2);
+        ui.add(itemsLabel, 0, 3);
 
 
         BorderPane borderPane = new BorderPane();
@@ -84,6 +87,7 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
+        attackLabel.setText("" + map.getPlayer().getAttack());
         itemsLabel.setText("");
         for (Item item: map.getPlayer().getInventory()) {
             itemsLabel.setText(itemsLabel.getText() + (item.getTileName() + "\n"));
