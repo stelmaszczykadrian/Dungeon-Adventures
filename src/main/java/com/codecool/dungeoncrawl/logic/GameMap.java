@@ -10,7 +10,7 @@ public class GameMap {
     private int width;
     private int height;
     private Cell[][] cells;
-    private List<CellType> collideList = Arrays.asList(CellType.WALL);
+    private List<CellType> collideList = Arrays.asList(CellType.WALL,CellType.GHOST,CellType.DEFENDER,CellType.SKELETON);
     private Player player;
 
     public GameMap(int width, int height, CellType defaultCellType) {
