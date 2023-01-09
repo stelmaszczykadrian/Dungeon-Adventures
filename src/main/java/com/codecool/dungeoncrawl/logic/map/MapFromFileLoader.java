@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl.logic;
+package com.codecool.dungeoncrawl.logic.map;
 
 import com.codecool.dungeoncrawl.logic.actors.Defender;
 import com.codecool.dungeoncrawl.logic.actors.Ghost;
@@ -8,9 +8,9 @@ import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 import java.io.InputStream;
 import java.util.Scanner;
 
-public class MapLoader {
-    public static GameMap loadMap() {
-        InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
+public class MapFromFileLoader implements MapLoader {
+    public GameMap loadMap() {
+        InputStream is = MapFromFileLoader.class.getResourceAsStream("/map.txt");
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
