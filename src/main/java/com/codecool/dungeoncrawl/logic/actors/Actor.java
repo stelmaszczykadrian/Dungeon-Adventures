@@ -15,7 +15,6 @@ public abstract class Actor implements Drawable {
 
     public void move(int dx, int dy) {
         GameMap map =cell.getGameMap();
-
         if(map.getCollideList().contains(map.getCell(map.getPlayer().getX()+dx,map.getPlayer().getY()+dy).getType())) return;
 
         Cell nextCell = cell.getNeighbor(dx, dy);
