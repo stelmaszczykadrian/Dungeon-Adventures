@@ -34,15 +34,15 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             break;
                         case 's':
-                            cell.setType(CellType.FLOOR);
+                            cell.setType(CellType.SKELETON);
                             new Skeleton(cell);
                             break;
                         case 'd':
-                            cell.setType(CellType.FLOOR);
+                            cell.setType(CellType.DEFENDER);
                             new Defender(cell);
                             break;
                         case 'g':
-                            cell.setType(CellType.FLOOR);
+                            cell.setType(CellType.GHOST);
                             new Ghost(cell);
                             break;
                         case '@':
