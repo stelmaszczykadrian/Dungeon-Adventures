@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.items.Item;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -27,6 +28,7 @@ public class Main extends Application {
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
+    Label itemsLabel = new Label();
 
     public static void main(String[] args) {
         launch(args);
@@ -40,6 +42,9 @@ public class Main extends Application {
 
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
+        ui.add(new Label("Inventory: "), 0, 1);
+        ui.add(itemsLabel, 0, 2);
+
 
         BorderPane borderPane = new BorderPane();
 
@@ -56,8 +61,6 @@ public class Main extends Application {
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
-        int oldX = map.getPlayer().getX();
-        int oldY = map.getPlayer().getY();
         switch (keyEvent.getCode()) {
             case UP -> map.getPlayer().move(0, -1);
             case DOWN -> map.getPlayer().move(0, 1);
@@ -81,5 +84,10 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
+        itemsLabel.setText("");
+        for (Item item: map.getPlayer().getInventory()) {
+            itemsLabel.setText(itemsLabel.getText() + (item.getTileName() + "\n"));
+        }
+
     }
 }
