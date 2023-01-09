@@ -2,11 +2,15 @@ package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Player;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class GameMap {
     private int width;
     private int height;
     private Cell[][] cells;
-
+    private List<CellType> collideList = Arrays.asList(CellType.WALL);
     private Player player;
 
     public GameMap(int width, int height, CellType defaultCellType) {
@@ -38,5 +42,9 @@ public class GameMap {
 
     public int getHeight() {
         return height;
+    }
+
+    public List<CellType> getCollideList() {
+        return collideList;
     }
 }

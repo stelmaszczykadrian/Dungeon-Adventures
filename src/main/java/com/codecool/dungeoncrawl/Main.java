@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import javafx.application.Application;
@@ -14,6 +15,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main extends Application {
     GameMap map = MapLoader.loadMap();
@@ -51,6 +56,8 @@ public class Main extends Application {
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
+        int oldX = map.getPlayer().getX();
+        int oldY = map.getPlayer().getY();
         switch (keyEvent.getCode()) {
             case UP:
                 map.getPlayer().move(0, -1);
@@ -68,6 +75,10 @@ public class Main extends Application {
                 map.getPlayer().move(1,0);
                 refresh();
                 break;
+        }
+        if(map.getCollideList().contains(map.getCell(map.getPlayer().getX(),map.getPlayer().getY()).getType())){
+            map.getPlayer().move(oldX-map.getPlayer().getX(),oldY-map.getPlayer().getY());
+            refresh();
         }
     }
 
