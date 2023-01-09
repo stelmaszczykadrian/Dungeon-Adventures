@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Drawable;
+import com.codecool.dungeoncrawl.logic.GameMap;
 
 public abstract class Actor implements Drawable {
     private Cell cell;
@@ -13,10 +14,15 @@ public abstract class Actor implements Drawable {
     }
 
     public void move(int dx, int dy) {
+        GameMap map =cell.getGameMap();
+
+        if(map.getCollideList().contains(map.getCell(map.getPlayer().getX()+dx,map.getPlayer().getY()+dy).getType())) return;
+
         Cell nextCell = cell.getNeighbor(dx, dy);
         cell.setActor(null);
         nextCell.setActor(this);
         cell = nextCell;
+
     }
 
     public int getHealth() {

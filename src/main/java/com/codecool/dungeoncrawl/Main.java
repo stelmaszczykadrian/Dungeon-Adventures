@@ -59,27 +59,12 @@ public class Main extends Application {
         int oldX = map.getPlayer().getX();
         int oldY = map.getPlayer().getY();
         switch (keyEvent.getCode()) {
-            case UP:
-                map.getPlayer().move(0, -1);
-                refresh();
-                break;
-            case DOWN:
-                map.getPlayer().move(0, 1);
-                refresh();
-                break;
-            case LEFT:
-                map.getPlayer().move(-1, 0);
-                refresh();
-                break;
-            case RIGHT:
-                map.getPlayer().move(1,0);
-                refresh();
-                break;
+            case UP -> map.getPlayer().move(0, -1);
+            case DOWN -> map.getPlayer().move(0, 1);
+            case LEFT -> map.getPlayer().move(-1, 0);
+            case RIGHT -> map.getPlayer().move(1,0);
         }
-        if(map.getCollideList().contains(map.getCell(map.getPlayer().getX(),map.getPlayer().getY()).getType())){
-            map.getPlayer().move(oldX-map.getPlayer().getX(),oldY-map.getPlayer().getY());
-            refresh();
-        }
+        refresh();
     }
 
     private void refresh() {
