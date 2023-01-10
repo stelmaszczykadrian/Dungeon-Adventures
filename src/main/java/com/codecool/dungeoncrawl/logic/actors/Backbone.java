@@ -1,9 +1,9 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
-import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.map.Cell;
 
-public class Skeleton extends Actor {
-    public Skeleton(Cell cell) {
+public class Backbone extends Actor {
+    public Backbone(Cell cell) {
         super(cell);
         setHealth(50);
         setAttack(5);
@@ -11,6 +11,6 @@ public class Skeleton extends Actor {
 
     @Override
     public String getTileName() {
-        return "skeleton";
+        return "backbone";
     }
 }
