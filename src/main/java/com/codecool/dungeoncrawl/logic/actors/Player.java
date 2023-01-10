@@ -13,7 +13,7 @@ public class Player extends Actor {
     public Player(Cell cell) {
         super(cell);
         setHealth(200);
-        setAttack(20);
+        setDamage(20);
     }
 
     public void move(int dx ,int dy) {
@@ -32,6 +32,10 @@ public class Player extends Actor {
         }
 
         setCoordiantes(dx ,dy);//move
+
+
+
+
     }
 
 
@@ -42,4 +46,13 @@ public class Player extends Actor {
     public ArrayList<Item> getInventory() {
         return items;
     }
+
+    public void pickUpItem(){
+        items.add(cell.getItem());
+        damage += cell.getItem().getDamage();
+        health += cell.getItem().getHealth();
+        cell.setItem(null);
+    }
+
+
 }
