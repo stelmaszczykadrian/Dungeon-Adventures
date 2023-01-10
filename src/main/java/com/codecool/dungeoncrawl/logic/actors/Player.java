@@ -17,6 +17,7 @@ public class Player extends Actor {
         damage = 10;
     }
 
+
     public void move(int dx ,int dy) {
         GameMap map = cell.getGameMap();
         Cell object = map.getCell(map.getPlayer().getX() + dx, map.getPlayer().getY() + dy);
@@ -45,4 +46,13 @@ public class Player extends Actor {
         return "player";
     }
 
+    @Override
+    public void move() {}
+
+    public void pickUpItem(){
+        items.add(cell.getItem());
+        damage += cell.getItem().getDamage();
+        health += cell.getItem().getHealth();
+        cell.setItem(null);
+    }
 }
