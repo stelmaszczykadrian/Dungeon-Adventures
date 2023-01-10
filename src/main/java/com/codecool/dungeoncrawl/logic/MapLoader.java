@@ -47,7 +47,7 @@ public class MapLoader {
                             new  Door(cell);
                             break;
                         case '@':
-                            cell.setType(CellType.FLOOR);
+                            cell.setType(CellType.FLOOR); //??????????????????
                             map.setPlayer(new Player(cell));
                             break;
                         default:
