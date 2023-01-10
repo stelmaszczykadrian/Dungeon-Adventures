@@ -31,19 +31,19 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             break;
                         case 's':
-                            cell.setType(CellType.SKELETON);
+                            cell.setType(CellType.FLOOR);
                             new Skeleton(cell);
                             break;
                         case 'd':
-                            cell.setType(CellType.DEFENDER);
+                            cell.setType(CellType.FLOOR);
                             new Defender(cell);
                             break;
                         case 'g':
-                            cell.setType(CellType.GHOST);
+                            cell.setType(CellType.FLOOR);
                             new Ghost(cell);
                             break;
                         case 'l':
-                            cell.setType(CellType.CLOSE);
+                            cell.setType(CellType.FLOOR);
                             new  Door(cell);
                             break;
                         case '@':
