@@ -7,7 +7,7 @@ public class Backbone extends Actor {
     public Backbone(Cell cell) {
         super(cell);
         setHealth(50);
-        setAttack(5);
+        setDamage(5);
     }
 
     @Override
