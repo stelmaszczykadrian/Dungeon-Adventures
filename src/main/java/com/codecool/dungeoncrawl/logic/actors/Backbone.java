@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.map.Cell;
+import com.codecool.dungeoncrawl.logic.map.GameMap;
 
 public class Backbone extends Actor {
     public Backbone(Cell cell) {
@@ -11,6 +12,7 @@ public class Backbone extends Actor {
 
     @Override
     public void move() {
+        //GameMap map = cell.getGameMap().
 
     }
 
