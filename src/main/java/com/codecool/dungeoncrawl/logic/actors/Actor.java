@@ -26,6 +26,7 @@ public abstract class Actor implements Drawable {
         enemy.health -= damage;
     }
 
+    public abstract void move();
     public int getHealth() {
         return health;
     }
