@@ -22,7 +22,7 @@ public class Player extends Actor {
         Door.tryOpen(dx, dy, map, items);
         //check we have key if yes open door
         Cell object = map.getCell(map.getPlayer().getX() + dx, map.getPlayer().getY() + dy);
-        //check object is in collidlist
+        //check object is an obstacle
         if (map.getObstacles().contains(object.getType())) return;
         //check is enemies
         if (object.getActor() != null) {
@@ -45,7 +45,4 @@ public class Player extends Actor {
         return "player";
     }
 
-    public ArrayList<Item> getInventory() {
-        return items;
-    }
 }
