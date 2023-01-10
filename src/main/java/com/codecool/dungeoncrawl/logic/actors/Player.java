@@ -1,7 +1,7 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
-import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.GameMap;
+import com.codecool.dungeoncrawl.logic.map.Cell;
+import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.items.Item;
 
 import java.util.ArrayList;
@@ -37,9 +37,5 @@ public class Player extends Actor {
 
     public String getTileName() {
         return "player";
-    }
-
-    public ArrayList<Item> getInventory() {
-        return items;
     }
 }
