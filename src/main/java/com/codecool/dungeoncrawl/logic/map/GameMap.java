@@ -1,5 +1,8 @@
 package com.codecool.dungeoncrawl.logic.map;
 
+import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.Backbone;
+import com.codecool.dungeoncrawl.logic.actors.Ghost;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 
 import java.util.Arrays;
@@ -9,7 +12,7 @@ public class GameMap {
     private int width;
     private int height;
     private Cell[][] cells;
-    private List<CellType> obstacles = Arrays.asList(CellType.WALL,CellType.GHOST,CellType.DEFENDER,CellType.BACKBONE,CellType.CLOSE);
+    private List<CellType> obstacles = Arrays.asList(CellType.WALL,CellType.CLOSE);
     private Player player;
 
     public GameMap(int width, int height, CellType defaultCellType) {

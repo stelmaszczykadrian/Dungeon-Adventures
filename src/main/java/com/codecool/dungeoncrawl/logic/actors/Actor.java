@@ -15,15 +15,16 @@ public abstract class Actor implements Drawable {
         this.cell.setActor(this);
     }
 
-    public void setCoordiantes(int dx,int dy) {
+    public void changeCell(int dx,int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
         cell.setActor(null);
         nextCell.setActor(this);
         cell = nextCell;
     }
     public void attack(Actor enemy){
+        System.out.println(health);
         if(health < 0){
-            cell.getGameMap().getCell(getX(),getY()).setType(CellType.FLOOR);
+            cell.getGameMap().getCell(getX(),getY()).setActor(null);
         }
         enemy.setHealth(enemy.getHealth()-attack);
     }
