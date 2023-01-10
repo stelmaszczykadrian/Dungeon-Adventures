@@ -1,6 +1,5 @@
 package com.codecool.dungeoncrawl.logic.items;
 
-
 import com.codecool.dungeoncrawl.logic.map.Cell;
 
 public class Axe extends Item {

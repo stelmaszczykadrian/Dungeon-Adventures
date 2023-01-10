@@ -10,6 +10,7 @@ public class Player extends Actor {
 
 
     ArrayList<Item> items = new ArrayList<>();
+
     public Player(Cell cell) {
         super(cell);
         setHealth(200);
@@ -36,6 +37,9 @@ public class Player extends Actor {
         }
 
 
+    public ArrayList<Item> getInventory() {
+        return items;
+    }
 
     public String getTileName() {
         return "player";
