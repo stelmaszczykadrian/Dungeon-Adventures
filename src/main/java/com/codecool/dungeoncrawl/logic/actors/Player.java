@@ -3,11 +3,8 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.items.Item;
-import com.codecool.dungeoncrawl.logic.items.Key;
-import com.codecool.dungeoncrawl.logic.items.Shield;
-
 import java.util.ArrayList;
-import java.util.Objects;
+
 
 public class Player extends Actor {
 
@@ -20,22 +17,24 @@ public class Player extends Actor {
     }
 
     public void move(int dx ,int dy) {
-        GameMap map =cell.getGameMap();
-//        Cell enemy = map.getCell(map.getPlayer().getX()+dx,map.getPlayer().getY()+dy);
+        GameMap map = cell.getGameMap();
+        Door.tryOpen(dx, dy, map, items);
+        //check we have key if yes open door
+        Cell object = map.getCell(map.getPlayer().getX() + dx, map.getPlayer().getY() + dy);
+        //check object is in collidlist
+        if (map.getObstacles().contains(object.getType())) return;
+        //check is enemies
+        if (object.getActor() != null) {
+            attack(object.getActor());//our attack
+            object.getActor().attack(this);//enemy attack
+            if (getHealth() < 0) {
+                //Lose
+            }
+                return;
+            }
+            changeCell(dx, dy);//move
+        }
 
-//        Door.tryOpen(dx, dy, map, items);//check we have key if yes open door
-
-//        if(map.getCollideList().contains(enemy.getType())) {
-//            attack(enemy.getActor());//our attack
-//            enemy.getActor().attack(this);//enemy attack
-//            if (getHealth() <0){
-//                //Lose
-//            }
-//            return;
-//        }
-
-        setCoordiantes(dx ,dy);//move
-    }
 
 
     public String getTileName() {

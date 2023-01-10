@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic.items;
 
-import com.codecool.dungeoncrawl.logic.Cell;
+
+import com.codecool.dungeoncrawl.logic.map.Cell;
 
 public class Shield extends Item {
     public Shield(Cell cell) {
