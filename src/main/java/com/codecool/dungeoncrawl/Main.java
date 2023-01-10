@@ -1,7 +1,6 @@
 package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.items.Item;
@@ -18,10 +17,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main extends Application {
     GameMap map = MapLoader.loadMap();
     Canvas canvas = new Canvas(
@@ -32,7 +27,6 @@ public class Main extends Application {
     Label itemsLabel = new Label();
     Label attackLabel = new Label();
     private Button pickUpButton = new Button("Pick up item");
-
 
     public static void main(String[] args) {
         launch(args);
@@ -52,7 +46,10 @@ public class Main extends Application {
         ui.add(itemsLabel, 0, 3);
         ui.add(pickUpButton, 0, 4);
 
-
+        pickUpButton.setOnAction(actionEvent ->  {
+            map.getPlayer().pickUpItem();
+            refresh();
+        });
 
         BorderPane borderPane = new BorderPane();
 
@@ -78,6 +75,8 @@ public class Main extends Application {
         refresh();
     }
 
+
+
     private void refresh() {
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -96,8 +95,8 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
-        attackLabel.setText("" + map.getPlayer().getAttack());
-        pickUpButton.setFocusTraversable(false);;
+        attackLabel.setText("" + map.getPlayer().getDamage());
+        pickUpButton.setFocusTraversable(false);
         itemsLabel.setText("");
         for (Item item: map.getPlayer().getInventory()) {
             itemsLabel.setText(itemsLabel.getText() + (item.getTileName() + "\n"));
