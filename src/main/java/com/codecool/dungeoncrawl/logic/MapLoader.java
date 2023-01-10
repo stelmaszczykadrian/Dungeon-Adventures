@@ -1,5 +1,12 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.actors.Defender;
+import com.codecool.dungeoncrawl.logic.actors.Ghost;
+import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.logic.actors.Backbone;
+import com.codecool.dungeoncrawl.logic.items.Key;
+import com.codecool.dungeoncrawl.logic.items.Axe;
+import com.codecool.dungeoncrawl.logic.items.Shield;
 import com.codecool.dungeoncrawl.logic.actors.*;
 
 import java.io.InputStream;
@@ -30,24 +37,32 @@ public class MapLoader {
                         case '.':
                             cell.setType(CellType.FLOOR);
                             break;
+                        case 'b':
+                            cell.setType(CellType.FLOOR);
+                            new Backbone(cell);
+                            break;
+                        case 'k':
+                            cell.setType(CellType.FLOOR);
+                            new Key(cell);
+                            break;
+                        case 'a':
+                            cell.setType(CellType.FLOOR);
+                            new Axe(cell);
+                            break;
                         case 's':
-                            cell.setType(CellType.SKELETON);
-                            new Skeleton(cell);
+                            cell.setType(CellType.FLOOR);
+                            new Shield(cell);
                             break;
                         case 'd':
-                            cell.setType(CellType.DEFENDER);
+                            cell.setType(CellType.FLOOR);
                             new Defender(cell);
                             break;
                         case 'g':
-                            cell.setType(CellType.GHOST);
+                            cell.setType(CellType.FLOOR);
                             new Ghost(cell);
                             break;
-                        case 'l':
-                            cell.setType(CellType.CLOSE);
-                            new  Door(cell);
-                            break;
                         case '@':
-                            cell.setType(CellType.FLOOR); //??????????????????
+                            cell.setType(CellType.FLOOR);
                             map.setPlayer(new Player(cell));
                             break;
                         default:
