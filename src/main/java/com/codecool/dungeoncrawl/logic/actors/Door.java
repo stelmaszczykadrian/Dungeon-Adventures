@@ -19,6 +19,9 @@ public class Door extends Actor{
     }
 
     @Override
+    public void move() {}
+
+    @Override
     public String getTileName() { return "closeDoor";}
 
     public static void tryOpen(int dx, int dy, GameMap map, ArrayList<Item> items) {
