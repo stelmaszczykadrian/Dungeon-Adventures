@@ -9,23 +9,14 @@ import com.codecool.dungeoncrawl.logic.map.GameMap;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Door extends Actor{
-
-
-    public Door(Cell cell) {
-        super(cell);
-        setHealth(99999999);
-        setAttack(0);
-    }
-
-    @Override
-    public String getTileName() { return "closeDoor";}
+public class Door {
 
     public static void tryOpen(int dx, int dy, GameMap map, ArrayList<Item> items) {
-        if (Objects.equals(map.getCell(map.getPlayer().getX() + dx, map.getPlayer().getY() + dy).getTileName(), "closeDoor")){
+        Cell ogject = map.getCell(map.getPlayer().getX() + dx, map.getPlayer().getY() + dy);
+        if (Objects.equals(ogject.getType(),CellType.CLOSE )){
             for (Item item: items) {
                 if(item instanceof Key){
-                    map.getCell(map.getPlayer().getX() + dx, map.getPlayer().getY() + dy).setType(CellType.OPEN);
+                    ogject.setType(CellType.OPEN);
                     items.remove(item);
                 }
             }

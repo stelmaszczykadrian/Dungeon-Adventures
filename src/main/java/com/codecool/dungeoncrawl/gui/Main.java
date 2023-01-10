@@ -3,7 +3,6 @@ package com.codecool.dungeoncrawl.gui;
 import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.map.MapFromFileLoader;
-import com.codecool.dungeoncrawl.logic.map.CellType;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -87,7 +86,7 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
-        attackLabel.setText("" + map.getPlayer().getAttack());
+        attackLabel.setText("" + map.getPlayer().getDamage());
         itemsLabel.setText("");
         for (Item item: map.getPlayer().getInventory()) {
             itemsLabel.setText(itemsLabel.getText() + (item.getTileName() + "\n"));
