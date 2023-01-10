@@ -17,10 +17,10 @@ public class Door extends Actor{
         setHealth(99999999);
         setAttack(0);
     }
+
     @Override
-    public String getTileName() {
-        return "closeDoor";
-    }
+    public String getTileName() { return "closeDoor";}
+
     public static void tryOpen(int dx, int dy, GameMap map, ArrayList<Item> items) {
         if (Objects.equals(map.getCell(map.getPlayer().getX() + dx, map.getPlayer().getY() + dy).getTileName(), "closeDoor")){
             for (Item item: items) {

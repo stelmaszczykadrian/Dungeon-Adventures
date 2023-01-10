@@ -1,9 +1,9 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
-import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.CellType;
+import com.codecool.dungeoncrawl.logic.map.CellType;
+import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.Drawable;
-import com.codecool.dungeoncrawl.logic.GameMap;
+import com.codecool.dungeoncrawl.logic.map.GameMap;
 
 public abstract class Actor implements Drawable {
     Cell cell;
@@ -52,5 +52,4 @@ public abstract class Actor implements Drawable {
     public int getY() {
         return cell.getY();
     }
-
 }

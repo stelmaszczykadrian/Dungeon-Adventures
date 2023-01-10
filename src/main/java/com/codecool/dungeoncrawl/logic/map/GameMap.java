@@ -1,8 +1,7 @@
-package com.codecool.dungeoncrawl.logic;
+package com.codecool.dungeoncrawl.logic.map;
 
 import com.codecool.dungeoncrawl.logic.actors.Player;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,7 +9,7 @@ public class GameMap {
     private int width;
     private int height;
     private Cell[][] cells;
-    private List<CellType> collideList = Arrays.asList(CellType.WALL,CellType.GHOST,CellType.DEFENDER,CellType.SKELETON,CellType.CLOSE);
+    private List<CellType> obstacles = Arrays.asList(CellType.WALL,CellType.GHOST,CellType.DEFENDER,CellType.BACKBONE,CellType.CLOSE);
     private Player player;
 
     public GameMap(int width, int height, CellType defaultCellType) {
@@ -44,7 +43,7 @@ public class GameMap {
         return height;
     }
 
-    public List<CellType> getCollideList() {
-        return collideList;
+    public List<CellType> getObstacles() {
+        return obstacles;
     }
 }
