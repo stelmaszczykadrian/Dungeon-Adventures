@@ -1,5 +1,7 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
+import com.codecool.dungeoncrawl.logic.Objects.Door;
+import com.codecool.dungeoncrawl.logic.Objects.Stairs;
 import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.items.Item;
@@ -23,6 +25,7 @@ public class Player extends Actor {
         Cell object = map.getCell(map.getPlayer().getX() + dx, map.getPlayer().getY() + dy);
         //check we have key if yes open door
         Door.tryOpen(dx, dy, map, items);
+        Stairs.goDown(dx, dy, cell);
         //check object is in collidlist
         if (map.getObstacles().contains(object.getType())) return;
         //check is enemies

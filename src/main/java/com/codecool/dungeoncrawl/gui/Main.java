@@ -19,8 +19,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+
+    public String fileName = "/map2.txt";
     MapFromFileLoader mapFromFileLoader = new MapFromFileLoader();
-    GameMap map = mapFromFileLoader.loadMap();
+    GameMap map = mapFromFileLoader.loadMap(fileName);
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
