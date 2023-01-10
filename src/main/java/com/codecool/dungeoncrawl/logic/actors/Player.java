@@ -1,14 +1,10 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.items.Item;
-import com.codecool.dungeoncrawl.logic.items.Key;
-import com.codecool.dungeoncrawl.logic.items.Shield;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Player extends Actor {
 
@@ -26,10 +22,10 @@ public class Player extends Actor {
 
         Door.tryOpen(dx, dy, map, items);//check we have key if yes open door
 
-        if(map.getCollideList().contains(enemy.getType())) {
+        if(map.getObstacles().contains(enemy.getType())) {
             attack(enemy.getActor());//our attack
             enemy.getActor().attack(this);//enemy attack
-            if (getHealth() <0){
+            if (getHealth() < 0){
                 //Lose
             }
             return;
