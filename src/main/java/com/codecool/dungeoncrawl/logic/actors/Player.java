@@ -22,18 +22,18 @@ public class Player extends Actor {
 
     public void move(int dx ,int dy) {
         GameMap map =cell.getGameMap();
-        Cell enemy = map.getCell(map.getPlayer().getX()+dx,map.getPlayer().getY()+dy);
+//        Cell enemy = map.getCell(map.getPlayer().getX()+dx,map.getPlayer().getY()+dy);
 
-        Door.tryOpen(dx, dy, map, items);//check we have key if yes open door
+//        Door.tryOpen(dx, dy, map, items);//check we have key if yes open door
 
-        if(map.getCollideList().contains(enemy.getType())) {
-            attack(enemy.getActor());//our attack
-            enemy.getActor().attack(this);//enemy attack
-            if (getHealth() <0){
-                //Lose
-            }
-            return;
-        }
+//        if(map.getCollideList().contains(enemy.getType())) {
+//            attack(enemy.getActor());//our attack
+//            enemy.getActor().attack(this);//enemy attack
+//            if (getHealth() <0){
+//                //Lose
+//            }
+//            return;
+//        }
 
         setCoordiantes(dx ,dy);//move
     }
