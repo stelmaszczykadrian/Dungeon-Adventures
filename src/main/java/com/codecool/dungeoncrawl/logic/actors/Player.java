@@ -14,7 +14,7 @@ public class Player extends Actor {
     public Player(Cell cell) {
         super(cell);
         setHealth(200);
-        setAttack(20);
+        setDamage(20);
     }
 
 
@@ -35,6 +35,11 @@ public class Player extends Actor {
             return;
         }
         changeCell(dx, dy);//move
+
+        setCoordiantes(dx ,dy);//move
+
+
+
 
     }
 

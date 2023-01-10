@@ -11,7 +11,7 @@ public class Ghost extends Actor {
     public Ghost(Cell cell) {
         super(cell);
         setHealth(30);
-        setAttack(3);
+        setDamage(3);
     }
 
     public void move(){

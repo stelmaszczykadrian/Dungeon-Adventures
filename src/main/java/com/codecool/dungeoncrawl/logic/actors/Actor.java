@@ -7,8 +7,8 @@ import com.codecool.dungeoncrawl.logic.map.GameMap;
 
 public abstract class Actor implements Drawable {
     Cell cell;
-    private int health = 10;
-    private int attack = 10;
+    int health = 10;
+    int damage = 10;
 
     public Actor(Cell cell) {
         this.cell = cell;
@@ -26,7 +26,7 @@ public abstract class Actor implements Drawable {
         if(health < 0){
             cell.getGameMap().getCell(getX(),getY()).setActor(null);
         }
-        enemy.setHealth(enemy.getHealth()-attack);
+        enemy.setHealth(enemy.getHealth()- damage);
     }
 
     public abstract void move();
@@ -36,11 +36,11 @@ public abstract class Actor implements Drawable {
     public void setHealth(int health) {
         this.health = health;
     }
-    public int getAttack() {
-        return attack;
+    public int getDamage() {
+        return damage;
     }
-    public void setAttack(int attack) {
-        this.attack = attack;
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
     public Cell getCell() {
