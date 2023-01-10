@@ -21,6 +21,7 @@ public abstract class Actor implements Drawable {
         nextCell.setActor(this);
         cell = nextCell;
     }
+
     public void attack(Actor enemy){
         if(health < 0){
             cell.getGameMap().getCell(getX(),getY()).setActor(null);
@@ -28,6 +29,7 @@ public abstract class Actor implements Drawable {
         enemy.setHealth(enemy.getHealth()-attack);
     }
 
+    public abstract void move();
     public int getHealth() {
         return health;
     }

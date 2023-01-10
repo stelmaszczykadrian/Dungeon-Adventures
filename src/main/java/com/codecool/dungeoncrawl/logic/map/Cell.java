@@ -44,6 +44,13 @@ public class Cell implements Drawable {
         return gameMap.getCell(x + dx, y + dy);
     }
 
+    public boolean hasNeighbor(int dx, int dy){
+        return x + dx >= 0
+                && x + dx < gameMap.getWidth()
+                && y + dy >= 0
+                && y + dy < gameMap.getHeight();
+    }
+
     @Override
     public String getTileName() {
         return type.getTileName();

@@ -11,6 +11,12 @@ public class Defender extends Actor {
     }
 
     @Override
+    public void move() {
+
+    }
+
+
+    @Override
     public String getTileName() {
         return "defender";
     }

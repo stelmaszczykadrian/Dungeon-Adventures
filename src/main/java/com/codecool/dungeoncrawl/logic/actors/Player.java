@@ -17,6 +17,7 @@ public class Player extends Actor {
         setAttack(20);
     }
 
+
     public void move(int dx ,int dy) {
         GameMap map = cell.getGameMap();
         Door.tryOpen(dx, dy, map, items);
@@ -31,10 +32,11 @@ public class Player extends Actor {
             if (getHealth() < 0) {
                 //Lose
             }
-                return;
-            }
-            changeCell(dx, dy);//move
+            return;
         }
+        changeCell(dx, dy);//move
+
+    }
 
 
     public ArrayList<Item> getInventory() {
@@ -44,5 +46,9 @@ public class Player extends Actor {
     public String getTileName() {
         return "player";
     }
+
+    @Override
+    public void move() {}
+
 
 }
