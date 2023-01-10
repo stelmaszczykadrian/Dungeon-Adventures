@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -30,6 +31,8 @@ public class Main extends Application {
     Label healthLabel = new Label();
     Label itemsLabel = new Label();
     Label attackLabel = new Label();
+    private Button pickUpButton = new Button("Pick up item");
+
 
     public static void main(String[] args) {
         launch(args);
@@ -47,6 +50,8 @@ public class Main extends Application {
         ui.add(attackLabel, 1, 1);
         ui.add(new Label("Inventory: "), 0, 2);
         ui.add(itemsLabel, 0, 3);
+        ui.add(pickUpButton, 0, 4);
+
 
 
         BorderPane borderPane = new BorderPane();
@@ -92,6 +97,7 @@ public class Main extends Application {
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
         attackLabel.setText("" + map.getPlayer().getAttack());
+        pickUpButton.setFocusTraversable(false);;
         itemsLabel.setText("");
         for (Item item: map.getPlayer().getInventory()) {
             itemsLabel.setText(itemsLabel.getText() + (item.getTileName() + "\n"));
