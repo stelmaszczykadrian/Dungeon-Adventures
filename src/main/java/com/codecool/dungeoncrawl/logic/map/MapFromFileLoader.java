@@ -13,8 +13,8 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 public class MapFromFileLoader implements MapLoader {
-    public GameMap loadMap() {
-        InputStream is = MapFromFileLoader.class.getResourceAsStream("/map.txt");
+    public GameMap loadMap(String fileName) {
+        InputStream is = MapFromFileLoader.class.getResourceAsStream(fileName);
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
@@ -36,6 +36,9 @@ public class MapFromFileLoader implements MapLoader {
                             break;
                         case '.':
                             cell.setType(CellType.FLOOR);
+                            break;
+                        case 'h':
+                            cell.setType(CellType.STAIRS);
                             break;
                         case 'b':
                             cell.setType(CellType.FLOOR);
