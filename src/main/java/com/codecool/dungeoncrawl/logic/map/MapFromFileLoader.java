@@ -56,6 +56,9 @@ public class MapFromFileLoader implements MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Defender(cell);
                             break;
+                        case 'l':
+                            cell.setType(CellType.CLOSE);
+                            break;
                         case 'g':
                             cell.setType(CellType.FLOOR);
                             new Ghost(cell);
