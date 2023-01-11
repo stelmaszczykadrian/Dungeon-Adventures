@@ -17,8 +17,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+
+    public String fileName = "/map.txt";
     MapFromFileLoader mapFromFileLoader = new MapFromFileLoader();
-    GameMap map = mapFromFileLoader.loadMap();
+    GameMap map = mapFromFileLoader.loadMap(this,fileName);
+
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
@@ -45,8 +48,8 @@ public class Main extends Application {
         ui.add(attackLabel, 1, 1);
         ui.add(new Label(), 0, 4);
         ui.add(pickUpButton, 0, 7);
-        lootLayout();
         ui.add(new Label(), 0, 11);
+        lootLayout();
         ui.add(mainLootGrid, 0, 14, 3, 1);
 
         pickUpButton.setOnAction(actionEvent ->  {
@@ -84,11 +87,6 @@ public class Main extends Application {
             case LEFT -> map.getPlayer().move(-1, 0);
             case RIGHT -> map.getPlayer().move(1,0);
         }
-        showAndHidePickUpButton();
-        map.removeDeadMobs();
-        if (map.getPlayer().getHealth() <= 0) {
-            System.exit(0);
-        }
         refresh();
     }
 
@@ -108,7 +106,16 @@ public class Main extends Application {
 
 
     private void refresh() {
-        context.setFill(Color.BLACK);
+        showAndHidePickUpButton();
+        map.removeDeadMobs();
+        checkPlayerIsDead();
+        pickUpButton.setFocusTraversable(false);
+        reLoadCanvas();
+        drawLoot();
+
+    }
+
+    private void reLoadCanvas() {
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
@@ -125,20 +132,28 @@ public class Main extends Application {
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
         attackLabel.setText("" + map.getPlayer().getDamage());
-        pickUpButton.setFocusTraversable(false);
-        drawLoot();
+    }
 
+    private void checkPlayerIsDead() {
+        if (map.getPlayer().getHealth() <= 0) {
+            System.exit(0);
+        }
     }
 
     private void drawLoot() {
         int counter = 0;
+        int row = 0;
+        int column = 0;
+        mainLootGrid.getChildren().clear(); //clear the grid
         for (int i = 0; i < map.getPlayer().getInventory().size(); i++) {
             this.canvas = new Canvas(Tiles.TILE_WIDTH, Tiles.TILE_WIDTH);
             this.context2 = canvas.getGraphicsContext2D();
 
             Tiles.drawTile(context2, map.getPlayer().getInventory().get(i), 0, 0);
-            mainLootGrid.add(canvas, counter, 0);
+            mainLootGrid.add(canvas, column, row);
             counter += 1;
+            row = counter / 4;
+            column = counter % 4;
         }
     }
 
@@ -149,5 +164,9 @@ public class Main extends Application {
 
     private void hideButton() {
         pickUpButton.setVisible(false);
+    }
+
+    public void setMap(GameMap map) {
+        this.map = map;
     }
 }
