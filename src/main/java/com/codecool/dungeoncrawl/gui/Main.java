@@ -84,6 +84,15 @@ public class Main extends Application {
             case LEFT -> map.getPlayer().move(-1, 0);
             case RIGHT -> map.getPlayer().move(1,0);
         }
+        showAndHidePickUpButton();
+        map.removeDeadMobs();
+        if (map.getPlayer().getHealth() <= 0) {
+            System.exit(0);
+        }
+        refresh();
+    }
+
+    private void showAndHidePickUpButton() {
         map.getMobs().forEach(Actor::move);
         if (map.getPlayer().getCell().isItemOnCell()) {
             showPickButton();
@@ -92,16 +101,10 @@ public class Main extends Application {
                 refresh();
                     }
             );
-        }else {
+        } else {
             hideButton();
         }
-        map.removeDeadMobs();
-        if (map.getPlayer().getHealth() <= 0) {
-            System.exit(0);
-        }
-        refresh();
     }
-
 
 
     private void refresh() {
