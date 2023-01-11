@@ -16,9 +16,10 @@ public class Stairs {
         MapFromFileLoader mapFromFileLoader = new MapFromFileLoader();
         Cell ogject = cell.getGameMap().getCell(cell.getGameMap().getPlayer().getX() + dx, cell.getGameMap().getPlayer().getY() + dy);
         if (Objects.equals(ogject.getType(), CellType.STAIRSDOWN )){
-            GameMap map = mapFromFileLoader.loadMap("/map2.txt");
-            cell.getGameMap().setCells(map.getCells());
+            GameMap map = mapFromFileLoader.loadMap(cell.getGameMap().getMain(), "/map2.txt");
             cell.getGameMap().getPlayer().setCell(map.getPlayer().getCell());
+            map.setPlayer(cell.getGameMap().getPlayer());
+            cell.getGameMap().getMain().setMap(map);
 
         }
         if (Objects.equals(ogject.getType(), CellType.STAIRSUP )){
