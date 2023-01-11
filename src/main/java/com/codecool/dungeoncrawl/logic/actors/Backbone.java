@@ -31,8 +31,9 @@ public class Backbone extends Actor {
                 changeCell(diff[0], diff[1]);
                 break;
             } else if (next.equals(playerCell)){
-                attack(player);
-                player.attack(this);
+//                attack(player);
+//                player.attack(this);
+                fight(player);
             }
         }
     }
