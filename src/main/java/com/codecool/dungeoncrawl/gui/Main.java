@@ -4,7 +4,6 @@ import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.map.MapFromFileLoader;
-import com.codecool.dungeoncrawl.logic.items.Item;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -19,7 +18,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    public String fileName = "/map2.txt";
+    public String fileName = "/map.txt";
     MapFromFileLoader mapFromFileLoader = new MapFromFileLoader();
     GameMap map = mapFromFileLoader.loadMap(fileName);
 
@@ -88,11 +87,6 @@ public class Main extends Application {
             case LEFT -> map.getPlayer().move(-1, 0);
             case RIGHT -> map.getPlayer().move(1,0);
         }
-        showAndHidePickUpButton();
-        map.removeDeadMobs();
-        if (map.getPlayer().getHealth() <= 0) {
-            System.exit(0);
-        }
         refresh();
     }
 
@@ -112,6 +106,11 @@ public class Main extends Application {
 
 
     private void refresh() {
+        showAndHidePickUpButton();
+        map.removeDeadMobs();
+        if (map.getPlayer().getHealth() <= 0) {
+            System.exit(0);
+        }
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < map.getWidth(); x++) {
