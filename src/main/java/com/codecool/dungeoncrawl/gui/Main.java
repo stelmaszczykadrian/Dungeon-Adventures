@@ -123,28 +123,24 @@ public class Main extends Application {
 
     private void reLoadCanvas() {
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        Player player = map.getPlayer();
         for (int x = 0; x <= 2 * radiusX; x++) {
             for (int y = 0; y <= 2 * radiusY; y++) {
-                int mapX = x + player.getX() - radiusX;
-                int mapY = y + player.getY() - radiusY;
-                if (0 <= mapX && mapX < map.getWidth() && 0 <= mapY && mapY < map.getHeight()){
-                    Cell cellToDraw = map.getCell(mapX, mapY);
-                    if (cellToDraw.getActor() != null) {
-                        Tiles.drawTile(context, cellToDraw.getActor(), x, y);
-                    }
-                    else if (cellToDraw.getItem() != null){
-                        Tiles.drawTile(context, cellToDraw.getItem(), x, y);
-                    } else {
-                        Tiles.drawTile(context, cellToDraw, x, y);
-                    }
-                } else {
-                    Tiles.drawTile(context, new OutOfMapCell(), x, y);
-                }
+                drawTile(x, y);
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
         attackLabel.setText("" + map.getPlayer().getDamage());
+    }
+
+    private void drawTile(int x, int y) {
+        int mapX = x + map.getPlayer().getX() - radiusX;
+        int mapY = y + map.getPlayer().getY() - radiusY;
+        if (0 <= mapX && mapX < map.getWidth() && 0 <= mapY && mapY < map.getHeight()){
+            Cell cell = map.getCell(mapX, mapY);
+            if (cell.getActor() != null) Tiles.drawTile(context, cell.getActor(), x, y);
+            else if (cell.getItem() != null) Tiles.drawTile(context, cell.getItem(), x, y);
+            else Tiles.drawTile(context, cell, x, y);
+        } else Tiles.drawTile(context, new OutOfMapCell(), x, y);
     }
 
     private void checkPlayerIsDead() {
