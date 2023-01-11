@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.gui;
 
 import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.map.MapFromFileLoader;
@@ -22,15 +23,11 @@ public class Main extends Application {
     MapFromFileLoader mapFromFileLoader = new MapFromFileLoader();
     GameMap map = mapFromFileLoader.loadMap(this,fileName);
 
-    int width = 21;
-    int height = 21;
-    int left = 10;
-    int right = 10;
-    int up = 10;
-    int down = 10;
+    int width = 10;
+    int height = 10;
     Canvas canvas = new Canvas(
-            width* Tiles.TILE_WIDTH,
-            height * Tiles.TILE_WIDTH);
+            width*2.1* Tiles.TILE_WIDTH,
+            height*2.1 * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     GraphicsContext context2 = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
@@ -124,12 +121,11 @@ public class Main extends Application {
 
     private void reLoadCanvas() {
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        System.out.println((map.getPlayer().getX())+ " " + (map.getPlayer().getY()));
-        Cell playerCell = map.getPlayer().getCell();
-        for (int x = playerCell.getX() - left; x <= playerCell.getX() + right; x++) {
-            for (int y = playerCell.getY() - up; y <= playerCell.getY() + down; y++) {
-                int canvaX = x - playerCell.getX() + left;
-                int canvaY = y - playerCell.getY() + up;
+        Player player = map.getPlayer();
+        for (int x = player.getX() - width; x <= player.getX() + width; x++) {
+            for (int y = player.getY() - height  ; y <= player.getY() + height; y++) {
+                int canvaX = x - player.getX() + width;
+                int canvaY = y - player.getY() + height;
                 if (0 <= x && x < map.getWidth() && 0 <= y && y < map.getHeight()){
                     Cell cellToDraw = map.getCell(x, y);
                     if (cellToDraw.getActor() != null) {
