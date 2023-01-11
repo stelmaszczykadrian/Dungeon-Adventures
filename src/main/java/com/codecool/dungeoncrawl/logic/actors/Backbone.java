@@ -16,10 +16,10 @@ public class Backbone extends Actor {
 
     @Override
     public void move() {
+        GameMap map = cell.getGameMap();
+        Player player = map.getPlayer();
+        Cell playerCell = player.cell;
         while(true){
-            GameMap map = cell.getGameMap();
-            Player player = map.getPlayer();
-            Cell playerCell = player.cell;
             int[][] coordsDifferentials = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
             int[] diff = coordsDifferentials[random.nextInt(coordsDifferentials.length)];
             if (!cell.hasNeighbor(diff[0], diff[1])){
@@ -31,8 +31,8 @@ public class Backbone extends Actor {
                 changeCell(diff[0], diff[1]);
                 break;
             } else if (next.equals(playerCell)){
-                attack(player);
-                player.attack(this);
+                fight(player);
+                break;
             }
         }
     }
