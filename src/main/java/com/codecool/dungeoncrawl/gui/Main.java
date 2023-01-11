@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.gui;
 
 import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.map.MapFromFileLoader;
@@ -22,9 +23,11 @@ public class Main extends Application {
     MapFromFileLoader mapFromFileLoader = new MapFromFileLoader();
     GameMap map = mapFromFileLoader.loadMap(this,fileName);
 
+    int width = 10;
+    int height = 10;
     Canvas canvas = new Canvas(
-            map.getWidth() * Tiles.TILE_WIDTH,
-            map.getHeight() * Tiles.TILE_WIDTH);
+            width*2.1* Tiles.TILE_WIDTH,
+            height*2.1 * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     GraphicsContext context2 = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
@@ -105,6 +108,7 @@ public class Main extends Application {
     }
 
 
+
     private void refresh() {
         showAndHidePickUpButton();
         map.removeDeadMobs();
@@ -117,16 +121,23 @@ public class Main extends Application {
 
     private void reLoadCanvas() {
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
-                Cell cell = map.getCell(x, y);
-                if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), x, y);
-                }
-                else if (cell.getItem() != null){
-                        Tiles.drawTile(context, cell.getItem(), x, y);
+        Player player = map.getPlayer();
+        for (int x = player.getX() - width; x <= player.getX() + width; x++) {
+            for (int y = player.getY() - height  ; y <= player.getY() + height; y++) {
+                int canvaX = x - player.getX() + width;
+                int canvaY = y - player.getY() + height;
+                if (0 <= x && x < map.getWidth() && 0 <= y && y < map.getHeight()){
+                    Cell cellToDraw = map.getCell(x, y);
+                    if (cellToDraw.getActor() != null) {
+                        Tiles.drawTile(context, cellToDraw.getActor(), canvaX, canvaY);
+                    }
+                    else if (cellToDraw.getItem() != null){
+                        Tiles.drawTile(context, cellToDraw.getItem(), canvaX, canvaY);
+                    } else {
+                        Tiles.drawTile(context, cellToDraw, canvaX, canvaY);
+                    }
                 } else {
-                    Tiles.drawTile(context, cell, x, y);
+                    Tiles.drawTile(context, new Cell(), canvaX, canvaY);
                 }
             }
         }
