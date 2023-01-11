@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic.map;
 
+import com.codecool.dungeoncrawl.gui.Main;
 import com.codecool.dungeoncrawl.logic.actors.Defender;
 import com.codecool.dungeoncrawl.logic.actors.Ghost;
 import com.codecool.dungeoncrawl.logic.actors.Player;
@@ -13,15 +14,17 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 public class MapFromFileLoader implements MapLoader {
-    public GameMap loadMap() {
-        InputStream is = MapFromFileLoader.class.getResourceAsStream("/map.txt");
+    public GameMap loadMap(Main main, String fileName) {
+        InputStream is = MapFromFileLoader.class.getResourceAsStream(fileName);
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
+        System.out.println(width);
+        System.out.println(height);
 
         scanner.nextLine(); // empty line
 
-        GameMap map = new GameMap(width, height, CellType.EMPTY);
+        GameMap map = new GameMap(main,width, height, CellType.EMPTY);
         for (int y = 0; y < height; y++) {
             String line = scanner.nextLine();
             for (int x = 0; x < width; x++) {
@@ -36,6 +39,12 @@ public class MapFromFileLoader implements MapLoader {
                             break;
                         case '.':
                             cell.setType(CellType.FLOOR);
+                            break;
+                        case 'h':
+                            cell.setType(CellType.STAIRSDOWN);
+                            break;
+                        case 'H':
+                            cell.setType(CellType.STAIRSUP);
                             break;
                         case 'b':
                             cell.setType(CellType.FLOOR);
@@ -55,6 +64,10 @@ public class MapFromFileLoader implements MapLoader {
                         case 'd':
                             cell.setType(CellType.FLOOR);
                             new Defender(cell);
+                            new Shield(cell);
+                            break;
+                        case 'l':
+                            cell.setType(CellType.CLOSE);
                             break;
                         case 'g':
                             cell.setType(CellType.FLOOR);

@@ -1,9 +1,12 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
+import com.codecool.dungeoncrawl.logic.Objects.Door;
+import com.codecool.dungeoncrawl.logic.Objects.Stairs;
 import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class Player extends Actor {
@@ -20,10 +23,11 @@ public class Player extends Actor {
 
     public void move(int dx, int dy) {
         GameMap map = cell.getGameMap();
-        Door.tryOpen(dx, dy, map, items);
-        //check we have key if yes open door
         Cell object = map.getCell(map.getPlayer().getX() + dx, map.getPlayer().getY() + dy);
-        //check object is an obstacle
+        //check we have key if yes open door
+        Door.tryOpen(dx, dy, map, items);
+        Stairs.goDown(dx, dy, cell);
+        //check object is in collidlist
         if (map.getObstacles().contains(object.getType())) return;
         //check is enemies
         if (object.getActor() != null) {

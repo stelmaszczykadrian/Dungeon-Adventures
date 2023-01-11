@@ -6,7 +6,7 @@ import com.codecool.dungeoncrawl.logic.Drawable;
 public abstract class Actor implements Drawable {
     Cell cell;
     int health;
-    int damage;
+    int damage ;
 
     public Actor(Cell cell) {
         this.cell = cell;
@@ -37,14 +37,8 @@ public abstract class Actor implements Drawable {
     public int getHealth() {
         return health;
     }
-    public void setHealth(int health) {
-        this.health = health;
-    }
     public int getDamage() {
         return damage;
-    }
-    public void setDamage(int damage) {
-        this.damage = damage;
     }
 
     public Cell getCell() {
@@ -57,5 +51,9 @@ public abstract class Actor implements Drawable {
 
     public int getY() {
         return cell.getY();
+    }
+
+    public void setCell(Cell cell) {
+        this.cell = cell;
     }
 }

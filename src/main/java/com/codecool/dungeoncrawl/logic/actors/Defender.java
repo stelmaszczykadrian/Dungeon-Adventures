@@ -6,8 +6,8 @@ public class Defender extends Actor {
 
     public Defender(Cell cell) {
         super(cell);
-        setHealth(50);
-        setDamage(7);
+        health = 70;
+        damage = 7;
     }
 
     @Override
