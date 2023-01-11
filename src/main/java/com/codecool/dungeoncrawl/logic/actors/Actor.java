@@ -1,9 +1,7 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
-import com.codecool.dungeoncrawl.logic.map.CellType;
 import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.Drawable;
-import com.codecool.dungeoncrawl.logic.map.GameMap;
 
 public abstract class Actor implements Drawable {
     Cell cell;
@@ -23,13 +21,21 @@ public abstract class Actor implements Drawable {
     }
 
     public void attack(Actor enemy){
-        if(health < 0){
-            cell.getGameMap().getCell(getX(),getY()).setActor(null);
+        if (health >= 0) {
+            enemy.health -= damage;
+            System.out.println(enemy.getClass().getSimpleName() + " : " + enemy.health);
         }
-        enemy.setHealth(enemy.getHealth() - damage);
+    }
+    }
+
+    public void fight(Actor enemy) {
+        System.out.println(this.getClass().getSimpleName() + " vs " + enemy.getClass().getSimpleName());
+        if (health > 0) attack(enemy);
+        if (enemy.health > 0) enemy.attack(this);
     }
 
     public abstract void move();
+
     public int getHealth() {
         return health;
     }

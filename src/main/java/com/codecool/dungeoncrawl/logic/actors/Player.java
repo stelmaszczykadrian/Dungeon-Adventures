@@ -13,12 +13,12 @@ public class Player extends Actor {
 
     public Player(Cell cell) {
         super(cell);
-        setHealth(200);
-        setDamage(20);
+        health = 50;
+        damage = 20;
     }
 
 
-    public void move(int dx ,int dy) {
+    public void move(int dx, int dy) {
         GameMap map = cell.getGameMap();
         Door.tryOpen(dx, dy, map, items);
         //check we have key if yes open door
@@ -27,21 +27,17 @@ public class Player extends Actor {
         if (map.getObstacles().contains(object.getType())) return;
         //check is enemies
         if (object.getActor() != null) {
-            attack(object.getActor());//our attack
-            object.getActor().attack(this);//enemy attack
-            if (getHealth() < 0) {
-                //Lose
-            }
-            return;
-        }
-        changeCell(dx, dy);//move
+            Actor enemy = object.getActor();
+            fight(enemy);
+        } else changeCell(dx, dy);//move
+    }
+
 
 //        setCoordiantes(dx ,dy);//move
 
 
 
 
-    }
 
 
     public ArrayList<Item> getInventory() {

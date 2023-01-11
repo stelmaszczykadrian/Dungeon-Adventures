@@ -1,14 +1,9 @@
 package com.codecool.dungeoncrawl.logic.map;
 
 import com.codecool.dungeoncrawl.logic.actors.Actor;
-import com.codecool.dungeoncrawl.logic.actors.Backbone;
-import com.codecool.dungeoncrawl.logic.actors.Ghost;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class GameMap {
     private int width;
@@ -63,5 +58,12 @@ public class GameMap {
             }
         }
         return mobs;
+    }
+
+    public void removeDeadMobs(){
+        List<Actor> mobs = getMobs();
+        for (Actor mob: mobs){
+            if (mob.getHealth() <= 0) mob.getCell().setActor(null);
+        }
     }
 }

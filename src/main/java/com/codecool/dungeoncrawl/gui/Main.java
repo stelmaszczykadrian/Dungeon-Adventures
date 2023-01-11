@@ -48,6 +48,11 @@ public class Main extends Application {
         ui.add(itemsLabel, 0, 3);
         ui.add(pickUpButton, 0, 4);
 
+        pickUpButton.setOnAction(actionEvent ->  {
+            map.getPlayer().pickUpItem();
+            refresh();
+        });
+
         BorderPane borderPane = new BorderPane();
 
         borderPane.setCenter(canvas);
@@ -81,8 +86,14 @@ public class Main extends Application {
         }else {
             hideButton();
         }
+        map.removeDeadMobs();
+        if (map.getPlayer().getHealth() <= 0) {
+            System.exit(0);
+        }
         refresh();
     }
+
+
 
     private void refresh() {
         context.setFill(Color.BLACK);
@@ -118,4 +129,4 @@ public class Main extends Application {
     private void hideButton() {
         pickUpButton.setVisible(false);
     }
-    }
+}
