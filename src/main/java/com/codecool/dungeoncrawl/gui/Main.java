@@ -48,8 +48,8 @@ public class Main extends Application {
         ui.add(attackLabel, 1, 1);
         ui.add(new Label(), 0, 4);
         ui.add(pickUpButton, 0, 7);
-        lootLayout();
         ui.add(new Label(), 0, 11);
+        lootLayout();
         ui.add(mainLootGrid, 0, 14, 3, 1);
 
         pickUpButton.setOnAction(actionEvent ->  {
@@ -142,13 +142,18 @@ public class Main extends Application {
 
     private void drawLoot() {
         int counter = 0;
+        int row = 0;
+        int column = 0;
+        mainLootGrid.getChildren().clear(); //clear the grid
         for (int i = 0; i < map.getPlayer().getInventory().size(); i++) {
             this.canvas = new Canvas(Tiles.TILE_WIDTH, Tiles.TILE_WIDTH);
             this.context2 = canvas.getGraphicsContext2D();
 
             Tiles.drawTile(context2, map.getPlayer().getInventory().get(i), 0, 0);
-            mainLootGrid.add(canvas, counter, 0);
+            mainLootGrid.add(canvas, column, row);
             counter += 1;
+            row = counter / 4;
+            column = counter % 4;
         }
     }
 
