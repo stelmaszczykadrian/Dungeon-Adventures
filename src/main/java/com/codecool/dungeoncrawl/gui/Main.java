@@ -124,22 +124,22 @@ public class Main extends Application {
     private void reLoadCanvas() {
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         Player player = map.getPlayer();
-        for (int X = 0; X <= 2 * radiusX; X++) {
-            for (int Y = 0; Y <= 2 * radiusY; Y++) {
-                int mapX = X + player.getX() - radiusX;
-                int mapY = Y + player.getY() - radiusY;
+        for (int x = 0; x <= 2 * radiusX; x++) {
+            for (int y = 0; y <= 2 * radiusY; y++) {
+                int mapX = x + player.getX() - radiusX;
+                int mapY = y + player.getY() - radiusY;
                 if (0 <= mapX && mapX < map.getWidth() && 0 <= mapY && mapY < map.getHeight()){
                     Cell cellToDraw = map.getCell(mapX, mapY);
                     if (cellToDraw.getActor() != null) {
-                        Tiles.drawTile(context, cellToDraw.getActor(), X, Y);
+                        Tiles.drawTile(context, cellToDraw.getActor(), x, y);
                     }
                     else if (cellToDraw.getItem() != null){
-                        Tiles.drawTile(context, cellToDraw.getItem(), X, Y);
+                        Tiles.drawTile(context, cellToDraw.getItem(), x, y);
                     } else {
-                        Tiles.drawTile(context, cellToDraw, X, Y);
+                        Tiles.drawTile(context, cellToDraw, x, y);
                     }
                 } else {
-                    Tiles.drawTile(context, new OutOfMapCell(), X, Y);
+                    Tiles.drawTile(context, new OutOfMapCell(), x, y);
                 }
             }
         }
