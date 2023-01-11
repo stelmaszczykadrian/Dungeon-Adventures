@@ -13,8 +13,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -25,13 +24,14 @@ public class Main extends Application {
     GameMap map = mapFromFileLoader.loadMap(fileName);
 
     Canvas canvas = new Canvas(
-            map.getWidth()* Tiles.TILE_WIDTH,
+            map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
+    GraphicsContext context2 = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
-    Label itemsLabel = new Label();
     Label attackLabel = new Label();
     private Button pickUpButton = new Button("Pick up item");
+    private GridPane mainLootGrid = new GridPane();
 
     public static void main(String[] args) {
         launch(args);
@@ -47,9 +47,11 @@ public class Main extends Application {
         ui.add(healthLabel, 1, 0);
         ui.add(new Label("Attack: "), 0, 1);
         ui.add(attackLabel, 1, 1);
-        ui.add(new Label("Inventory: "), 0, 2);
-        ui.add(itemsLabel, 0, 3);
-        ui.add(pickUpButton, 0, 4);
+        ui.add(new Label(), 0, 4);
+        ui.add(pickUpButton, 0, 7);
+        lootLayout();
+        ui.add(new Label(), 0, 11);
+        ui.add(mainLootGrid, 0, 14, 3, 1);
 
         pickUpButton.setOnAction(actionEvent ->  {
             map.getPlayer().pickUpItem();
@@ -60,6 +62,7 @@ public class Main extends Application {
 
         borderPane.setCenter(canvas);
         borderPane.setRight(ui);
+        hideButton();
 
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
@@ -70,6 +73,14 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    private void lootLayout() {
+        mainLootGrid.setPrefSize(5 * Tiles.TILE_WIDTH, 200);
+        mainLootGrid.setPadding(new Insets(5));
+        mainLootGrid.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
+        mainLootGrid.setBackground(new Background(new BackgroundFill(Color.valueOf("#472D3C"), CornerRadii.EMPTY, Insets.EMPTY)));
+    }
+
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case UP -> map.getPlayer().move(0, -1);
@@ -77,10 +88,27 @@ public class Main extends Application {
             case LEFT -> map.getPlayer().move(-1, 0);
             case RIGHT -> map.getPlayer().move(1,0);
         }
-        map.getMobs().forEach(Actor::move);
+        showAndHidePickUpButton();
+        map.removeDeadMobs();
+        if (map.getPlayer().getHealth() <= 0) {
+            System.exit(0);
+        }
         refresh();
     }
 
+    private void showAndHidePickUpButton() {
+        map.getMobs().forEach(Actor::move);
+        if (map.getPlayer().getCell().isItemOnCell()) {
+            showPickButton();
+            pickUpButton.setOnAction(actionEvent ->  {
+                map.getPlayer().pickUpItem();
+                refresh();
+                    }
+            );
+        } else {
+            hideButton();
+        }
+    }
 
 
     private void refresh() {
@@ -88,12 +116,12 @@ public class Main extends Application {
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
-                Cell cell = map.getCell(x,y);
+                Cell cell = map.getCell(x, y);
                 if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), x,y);
+                    Tiles.drawTile(context, cell.getActor(), x, y);
                 }
                 else if (cell.getItem() != null){
-                        Tiles.drawTile(context, cell.getItem(), x,y);
+                        Tiles.drawTile(context, cell.getItem(), x, y);
                 } else {
                     Tiles.drawTile(context, cell, x, y);
                 }
@@ -102,10 +130,28 @@ public class Main extends Application {
         healthLabel.setText("" + map.getPlayer().getHealth());
         attackLabel.setText("" + map.getPlayer().getDamage());
         pickUpButton.setFocusTraversable(false);
-        itemsLabel.setText("");
-        for (Item item: map.getPlayer().getInventory()) {
-            itemsLabel.setText(itemsLabel.getText() + (item.getTileName() + "\n"));
-        }
+        drawLoot();
 
+    }
+
+    private void drawLoot() {
+        int counter = 0;
+        for (int i = 0; i < map.getPlayer().getInventory().size(); i++) {
+            this.canvas = new Canvas(Tiles.TILE_WIDTH, Tiles.TILE_WIDTH);
+            this.context2 = canvas.getGraphicsContext2D();
+
+            Tiles.drawTile(context2, map.getPlayer().getInventory().get(i), 0, 0);
+            mainLootGrid.add(canvas, counter, 0);
+            counter += 1;
+        }
+    }
+
+
+    private void showPickButton() {
+        pickUpButton.setVisible(true);
+    }
+
+    private void hideButton() {
+        pickUpButton.setVisible(false);
     }
 }
