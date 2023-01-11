@@ -32,6 +32,10 @@ public class Cell implements Drawable {
     public Item getItem() {
         return item;
     }
+
+    public boolean isItemOnCell() {
+        return getItem() != null;
+    }
     public void setItem(Item item) {
         this.item = item;
     }

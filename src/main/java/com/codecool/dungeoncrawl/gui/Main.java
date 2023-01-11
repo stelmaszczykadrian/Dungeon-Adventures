@@ -4,7 +4,6 @@ import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.map.MapFromFileLoader;
-import com.codecool.dungeoncrawl.logic.map.CellType;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -49,15 +48,11 @@ public class Main extends Application {
         ui.add(itemsLabel, 0, 3);
         ui.add(pickUpButton, 0, 4);
 
-        pickUpButton.setOnAction(actionEvent ->  {
-            map.getPlayer().pickUpItem();
-            refresh();
-        });
-
         BorderPane borderPane = new BorderPane();
 
         borderPane.setCenter(canvas);
         borderPane.setRight(ui);
+        hideButton();
 
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
@@ -76,10 +71,18 @@ public class Main extends Application {
             case RIGHT -> map.getPlayer().move(1,0);
         }
         map.getMobs().forEach(Actor::move);
+        if (map.getPlayer().getCell().isItemOnCell()) {
+            showPickButton();
+            pickUpButton.setOnAction(actionEvent ->  {
+                map.getPlayer().pickUpItem();
+                refresh();
+                    }
+            );
+        }else {
+            hideButton();
+        }
         refresh();
     }
-
-
 
     private void refresh() {
         context.setFill(Color.BLACK);
@@ -106,4 +109,13 @@ public class Main extends Application {
         }
 
     }
-}
+
+
+    private void showPickButton() {
+        pickUpButton.setVisible(true);
+    }
+
+    private void hideButton() {
+        pickUpButton.setVisible(false);
+    }
+    }
