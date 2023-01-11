@@ -20,7 +20,7 @@ public class Main extends Application {
 
     public String fileName = "/map.txt";
     MapFromFileLoader mapFromFileLoader = new MapFromFileLoader();
-    GameMap map = mapFromFileLoader.loadMap(fileName);
+    GameMap map = mapFromFileLoader.loadMap(this,fileName);
 
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
@@ -108,10 +108,14 @@ public class Main extends Application {
     private void refresh() {
         showAndHidePickUpButton();
         map.removeDeadMobs();
-        if (map.getPlayer().getHealth() <= 0) {
-            System.exit(0);
-        }
-        context.setFill(Color.BLACK);
+        checkPlayerIsDead();
+        pickUpButton.setFocusTraversable(false);
+        reLoadCanvas();
+        drawLoot();
+
+    }
+
+    private void reLoadCanvas() {
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
@@ -128,9 +132,12 @@ public class Main extends Application {
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
         attackLabel.setText("" + map.getPlayer().getDamage());
-        pickUpButton.setFocusTraversable(false);
-        drawLoot();
+    }
 
+    private void checkPlayerIsDead() {
+        if (map.getPlayer().getHealth() <= 0) {
+            System.exit(0);
+        }
     }
 
     private void drawLoot() {
@@ -152,5 +159,9 @@ public class Main extends Application {
 
     private void hideButton() {
         pickUpButton.setVisible(false);
+    }
+
+    public void setMap(GameMap map) {
+        this.map = map;
     }
 }

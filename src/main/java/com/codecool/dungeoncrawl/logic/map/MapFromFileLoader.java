@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic.map;
 
+import com.codecool.dungeoncrawl.gui.Main;
 import com.codecool.dungeoncrawl.logic.actors.Defender;
 import com.codecool.dungeoncrawl.logic.actors.Ghost;
 import com.codecool.dungeoncrawl.logic.actors.Player;
@@ -13,7 +14,7 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 public class MapFromFileLoader implements MapLoader {
-    public GameMap loadMap(String fileName) {
+    public GameMap loadMap(Main main, String fileName) {
         InputStream is = MapFromFileLoader.class.getResourceAsStream(fileName);
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
@@ -23,7 +24,7 @@ public class MapFromFileLoader implements MapLoader {
 
         scanner.nextLine(); // empty line
 
-        GameMap map = new GameMap(width, height, CellType.EMPTY);
+        GameMap map = new GameMap(main,width, height, CellType.EMPTY);
         for (int y = 0; y < height; y++) {
             String line = scanner.nextLine();
             for (int x = 0; x < width; x++) {
