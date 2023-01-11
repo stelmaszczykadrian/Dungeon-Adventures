@@ -1,11 +1,8 @@
 package com.codecool.dungeoncrawl.gui;
 
 import com.codecool.dungeoncrawl.logic.actors.Actor;
-import com.codecool.dungeoncrawl.logic.map.Cell;
-import com.codecool.dungeoncrawl.logic.map.GameMap;
-import com.codecool.dungeoncrawl.logic.map.MapFromFileLoader;
+import com.codecool.dungeoncrawl.logic.map.*;
 import com.codecool.dungeoncrawl.logic.items.Item;
-import com.codecool.dungeoncrawl.logic.map.OutOfMapCell;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -27,6 +24,10 @@ public class Main extends Application {
 
     int width = 21;
     int height = 21;
+    int left = 10;
+    int right = 10;
+    int up = 10;
+    int down = 10;
     Canvas canvas = new Canvas(
             width* Tiles.TILE_WIDTH,
             height * Tiles.TILE_WIDTH);
@@ -86,51 +87,28 @@ public class Main extends Application {
 
 
 
-    private void refresh() {
-        int left = width/2;
-        int right = width/2;
-        int up = height/2;
-        int down = height/2;
-//        if (map.getPlayer().getX() < left) {
-//            left = left-(left-map.getPlayer().getX());
-//        }
-//        if (map.getPlayer().getX()+right > map.getWidth()) {
-//            right = map.getWidth() - map.getPlayer().getX();
-//        }
-//        if (map.getPlayer().getY() < up) {
-//            up = up-(up-map.getPlayer().getY());
-//        }
-//        if (map.getPlayer().getY()+down > map.getHeight()) {
-//            down = map.getHeight()-map.getPlayer().getY();
-//        }
-//        System.out.println(left);
-//        System.out.println(right);
-//        System.out.println(up);
-//        System.out.println(down);
-//
+    private void refresh() {//
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         System.out.println((map.getPlayer().getX())+ " " + (map.getPlayer().getY()));
-        for (int x = -left; x < right; x++) {
-            for (int y = -up; y < down; y++) {
-                Cell playerCell = map.getCell(map.getPlayer().getX(), map.getPlayer().getY());
-                if (playerCell.hasNeighbor(x,y)){
-                    Cell cellToDraw = playerCell.getNeighbor(map.getPlayer().getX()+x, map.getPlayer().getY()+y);
+        Cell playerCell = map.getPlayer().getCell();
+        for (int x = playerCell.getX() - left; x <= playerCell.getX() + right; x++) {
+            for (int y = playerCell.getY() - up; y <= playerCell.getY() + down; y++) {
+                int canvaX = x - playerCell.getX() + left;
+                int canvaY = y - playerCell.getY() + up;
+                if (0 <= x && x < map.getWidth() && 0 <= y && y < map.getHeight()){
+                    Cell cellToDraw = map.getCell(x, y);
                     if (cellToDraw.getActor() != null) {
-                        Tiles.drawTile(context, cellToDraw.getActor(), map.getPlayer().getX()+x, map.getPlayer().getY()+y);
+                        Tiles.drawTile(context, cellToDraw.getActor(), canvaX, canvaY);
                     }
                     else if (cellToDraw.getItem() != null){
-                        Tiles.drawTile(context, cellToDraw.getItem(), map.getPlayer().getX()+x, map.getPlayer().getY()+y);
+                        Tiles.drawTile(context, cellToDraw.getItem(), canvaX, canvaY);
                     } else {
-                        Tiles.drawTile(context, cellToDraw, map.getPlayer().getX()+x, map.getPlayer().getY()+y);
+                        Tiles.drawTile(context, cellToDraw, canvaX, canvaY);
                     }
                 } else {
-                    Tiles.drawTile(context, new OutOfMapCell(), map.getPlayer().getX() + x, map.getPlayer().getY()+y);
+                    Tiles.drawTile(context, new Cell(), canvaX, canvaY);
                 }
-                Cell cell = map.getCell(map.getPlayer().getX() + x,map.getPlayer().getY() + y);
-
-                System.out.println((map.getPlayer().getX() + x)+ " " + (map.getPlayer().getY() + y));
-
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
