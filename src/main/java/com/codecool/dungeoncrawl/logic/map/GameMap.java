@@ -1,20 +1,15 @@
 package com.codecool.dungeoncrawl.logic.map;
 
 import com.codecool.dungeoncrawl.logic.actors.Actor;
-import com.codecool.dungeoncrawl.logic.actors.Backbone;
-import com.codecool.dungeoncrawl.logic.actors.Ghost;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class GameMap {
     private int width;
     private int height;
     private Cell[][] cells;
-    private List<CellType> obstacles = Arrays.asList(CellType.WALL, CellType.CLOSE);
+    private final List<CellType> obstacles = Arrays.asList(CellType.WALL, CellType.CLOSE);
     private Player player;
 
     public GameMap(int width, int height, CellType defaultCellType) {
@@ -72,6 +67,13 @@ public class GameMap {
             }
         }
         return mobs;
+    }
+
+    public void removeDeadMobs(){
+        List<Actor> mobs = getMobs();
+        for (Actor mob: mobs){
+            if (mob.getHealth() <= 0) mob.getCell().setActor(null);
+        }
     }
 
      public List<CellType> getO(){
