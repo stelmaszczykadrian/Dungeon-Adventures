@@ -28,12 +28,13 @@ public class Player extends Actor {
         Door.tryOpen(dx, dy, map, items);
         Stairs.goDown(dx, dy, cell);
         //check object is in collidlist
-        if (map.getObstacles().contains(object.getType())) return;
+        if (map.getObstacles().contains(object.getType())&& !name.equalsIgnoreCase("piotr")) return;
         //check is enemies
         if (object.getActor() != null) {
             Actor enemy = object.getActor();
             fight(enemy);
-        } else changeCell(dx, dy);//move
+        }
+        changeCell(dx, dy);//move
     }
 
 
