@@ -4,7 +4,6 @@ import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.map.MapFromFileLoader;
-import com.codecool.dungeoncrawl.logic.map.CellType;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -76,6 +75,10 @@ public class Main extends Application {
             case RIGHT -> map.getPlayer().move(1,0);
         }
         map.getMobs().forEach(Actor::move);
+        map.removeDeadMobs();
+        if (map.getPlayer().getHealth() <= 0) {
+            System.exit(0);
+        }
         refresh();
     }
 
