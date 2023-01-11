@@ -5,8 +5,8 @@ import com.codecool.dungeoncrawl.logic.Drawable;
 
 public abstract class Actor implements Drawable {
     Cell cell;
-    int health = 10;
-    int damage = 10;
+    int health;
+    int damage;
 
     public Actor(Cell cell) {
         this.cell = cell;
@@ -21,10 +21,8 @@ public abstract class Actor implements Drawable {
     }
 
     public void attack(Actor enemy){
-        if (health >= 0) {
-            enemy.health -= damage;
-            System.out.println(enemy.getClass().getSimpleName() + " : " + enemy.health);
-        }
+        enemy.health -= damage;
+        System.out.println(enemy.getClass().getSimpleName() + " : " + enemy.health);
     }
 
 
