@@ -6,6 +6,7 @@ import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class Player extends Actor {
@@ -23,6 +24,8 @@ public class Player extends Actor {
     public void move(int dx ,int dy) {
         GameMap map = cell.getGameMap();
         Cell object = map.getCell(map.getPlayer().getX() + dx, map.getPlayer().getY() + dy);
+        System.out.println(map.getCell(map.getPlayer().getX() + dx, map.getPlayer().getY() + dy).getType());
+        System.out.println(cell.getGameMap().getObstacles());
         //check we have key if yes open door
         Door.tryOpen(dx, dy, map, items);
         Stairs.goDown(dx, dy, cell);

@@ -67,7 +67,4 @@ public class Cell implements Drawable {
     public GameMap getGameMap() {
         return gameMap;
     }
-    public void setGameMapGameMap(GameMap gameMap) {
-        this.gameMap =gameMap;
-    }
 }

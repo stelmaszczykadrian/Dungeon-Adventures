@@ -32,6 +32,15 @@ public class GameMap {
         return cells[x][y];
     }
 
+
+    public Cell[][] getCells() {
+        return cells;
+    }
+
+    public void setCells(Cell[][] cells) {
+        this.cells = cells;
+    }
+
     public void setPlayer(Player player) {
         this.player = player;
     }
@@ -63,5 +72,9 @@ public class GameMap {
             }
         }
         return mobs;
+    }
+
+     public List<CellType> getO(){
+        return obstacles;
     }
 }
