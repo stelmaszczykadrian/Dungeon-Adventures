@@ -12,7 +12,6 @@ import java.util.Arrays;
 public class Player extends Actor {
     String name;
 
-
     ArrayList<Item> items = new ArrayList<>();
 
     public Player(Cell cell) {
@@ -38,11 +37,6 @@ public class Player extends Actor {
     }
 
 
-//        setCoordiantes(dx ,dy);//move
-
-
-
-
 
 
     public ArrayList<Item> getInventory() {
@@ -66,4 +60,5 @@ public class Player extends Actor {
     public void setName(String name) {
         this.name = name;
     }
+
 }

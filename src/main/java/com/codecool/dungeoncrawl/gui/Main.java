@@ -24,12 +24,18 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Main extends Application {
-
-    public String fileName = "/map.txt";
     MapFromFileLoader mapFromFileLoader = new MapFromFileLoader();
-    GameMap map = mapFromFileLoader.loadMap(this,fileName);
+    List<GameMap> maps = new ArrayList<>();
+    List<String> nameMaps = Arrays.asList("/map.txt","/map2.txt");
+
+    int level;
+    GameMap map;
+
 
     int radiusX = 10;
     int radiusY = 10;
@@ -44,6 +50,12 @@ public class Main extends Application {
     private Button pickUpButton = new Button("Pick up item");
     private GridPane mainLootGrid = new GridPane();
     Stage stage;
+
+
+    public Main() {
+        maps.add(mapFromFileLoader.loadMap(this,nameMaps.get(level)));
+        this.map =maps.get(level);
+    }
     public static void main(String[] args) {
         launch(args);
     }
@@ -273,7 +285,20 @@ public class Main extends Application {
         pickUpButton.setVisible(false);
     }
 
-    public void setMap(GameMap map) {
-        this.map = map;
+    public void addMap(GameMap map) {
+        maps.add(map);
+    }
+
+    public void nextLevel(){
+        this.level ++;
+        if(level >=maps.size()){
+            GameMap map = mapFromFileLoader.loadMap(this, nameMaps.get(level));
+            addMap(map);
+        }
+        this.map =maps.get(level);
+    }
+    public void previousLevel(){
+        this.level --;
+        this.map =maps.get(level);
     }
 }

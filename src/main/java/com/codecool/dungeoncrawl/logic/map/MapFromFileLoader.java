@@ -19,9 +19,6 @@ public class MapFromFileLoader implements MapLoader {
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
-        System.out.println(width);
-        System.out.println(height);
-
         scanner.nextLine(); // empty line
 
         GameMap map = new GameMap(main,width, height, CellType.EMPTY);

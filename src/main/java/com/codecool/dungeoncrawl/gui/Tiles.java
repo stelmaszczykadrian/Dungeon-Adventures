@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class Tiles {
     public static int TILE_WIDTH = 32;
+    public static int TILE_HIGHT= 32;
 
     private static Image tileset = new Image("/tiles.png", 543 * 2, 543 * 2, true, false);
     private static Map<String, Tile> tileMap = new HashMap<>();
@@ -16,9 +17,9 @@ public class Tiles {
         public final int x, y, w, h;
         Tile(int i, int j) {
             x = i * (TILE_WIDTH + 2);
-            y = j * (TILE_WIDTH + 2);
+            y = j * (TILE_HIGHT + 2);
             w = TILE_WIDTH;
-            h = TILE_WIDTH;
+            h = TILE_HIGHT;
         }
     }
 
