@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 
 public class Player extends Actor {
+    String name;
 
 
     ArrayList<Item> items = new ArrayList<>();
@@ -60,5 +61,9 @@ public class Player extends Actor {
         damage += cell.getItem().getDamage();
         health += cell.getItem().getHealth();
         cell.setItem(null);
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
