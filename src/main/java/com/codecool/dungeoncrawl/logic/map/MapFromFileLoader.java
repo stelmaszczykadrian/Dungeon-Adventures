@@ -18,6 +18,8 @@ public class MapFromFileLoader implements MapLoader {
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
+        System.out.println(width);
+        System.out.println(height);
 
         scanner.nextLine(); // empty line
 
@@ -38,7 +40,10 @@ public class MapFromFileLoader implements MapLoader {
                             cell.setType(CellType.FLOOR);
                             break;
                         case 'h':
-                            cell.setType(CellType.STAIRS);
+                            cell.setType(CellType.STAIRSDOWN);
+                            break;
+                        case 'H':
+                            cell.setType(CellType.STAIRSUP);
                             break;
                         case 'b':
                             cell.setType(CellType.FLOOR);
@@ -58,6 +63,7 @@ public class MapFromFileLoader implements MapLoader {
                         case 'd':
                             cell.setType(CellType.FLOOR);
                             new Defender(cell);
+                            new Shield(cell);
                             break;
                         case 'l':
                             cell.setType(CellType.CLOSE);

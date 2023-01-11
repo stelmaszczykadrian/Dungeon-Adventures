@@ -23,9 +23,12 @@ public class Main extends Application {
     public String fileName = "/map2.txt";
     MapFromFileLoader mapFromFileLoader = new MapFromFileLoader();
     GameMap map = mapFromFileLoader.loadMap(fileName);
+
+    int width = 21;
+    int height = 21;
     Canvas canvas = new Canvas(
-            map.getWidth() * Tiles.TILE_WIDTH,
-            map.getHeight() * Tiles.TILE_WIDTH);
+            width* Tiles.TILE_WIDTH,
+            height * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
     Label itemsLabel = new Label();
@@ -83,16 +86,37 @@ public class Main extends Application {
 
 
     private void refresh() {
+        int left = width/2;
+        int right = width/2;
+        int up = height/2;
+        int down = height/2;
+        if (map.getPlayer().getX() < left) {
+            left = left-(left-map.getPlayer().getX());
+        }
+        if (map.getPlayer().getX()+right > map.getWidth()) {
+            right = map.getWidth() - map.getPlayer().getX();
+        }
+        if (map.getPlayer().getY() < up) {
+            up = up-(up-map.getPlayer().getY());
+        }
+        if (map.getPlayer().getY()+down > map.getHeight()) {
+            down = map.getHeight()-map.getPlayer().getY();
+        }
+        System.out.println(left);
+        System.out.println(right);
+        System.out.println(up);
+        System.out.println(down);
+//
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
-                Cell cell = map.getCell(x, y);
+        for (int x = -left; x < right; x++) {
+            for (int y = -up; y < down; y++) {
+                Cell cell = map.getCell(map.getPlayer().getX()+x,map.getPlayer().getY()+y);
                 if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), x, y);
+                    Tiles.drawTile(context, cell.getActor(), map.getPlayer().getX()+x, map.getPlayer().getY()+y);
                 }
                 else if (cell.getItem() != null){
-                        Tiles.drawTile(context, cell.getItem(), x, y);
+                        Tiles.drawTile(context, cell.getItem(), map.getPlayer().getX()+x, map.getPlayer().getY()+y);
                 } else {
                     Tiles.drawTile(context, cell, x, y);
                 }
