@@ -22,14 +22,32 @@ public abstract class Actor implements Drawable {
         cell = nextCell;
     }
 
+//    public void attack(Actor enemy) {
+//        if (health < 0) {
+//            cell.getGameMap().getCell(getX(), getY()).setActor(null);
+//        }
+//    }
+
+
     public void attack(Actor enemy){
-        if(health < 0){
-            cell.getGameMap().getCell(getX(),getY()).setActor(null);
+        if (health >= 0){
+            enemy.health -= damage;
+            System.out.println(enemy.getClass().getSimpleName() + " : " + enemy.health );
+        } else {
+            cell.setActor(null);
         }
-        enemy.setHealth(enemy.getHealth()- damage);
+    }
+
+    public void fight(Actor enemy){
+        System.out.println(this.getClass().getSimpleName() + " vs " + enemy.getClass().getSimpleName());
+        attack(enemy);
+        if (enemy.health >= 0) enemy.attack(this);
+        else enemy.cell.setActor(null);
+        if (health < 0 ) cell.setActor(null);
     }
 
     public abstract void move();
+
     public int getHealth() {
         return health;
     }

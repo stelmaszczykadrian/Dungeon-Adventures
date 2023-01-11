@@ -27,11 +27,13 @@ public class Player extends Actor {
         if (map.getObstacles().contains(object.getType())) return;
         //check is enemies
         if (object.getActor() != null) {
-            attack(object.getActor());//our attack
-            object.getActor().attack(this);//enemy attack
-            if (getHealth() < 0) {
-                //Lose
-            }
+            Actor enemy = object.getActor();
+            fight(enemy);
+//            attack(enemy);
+//            enemy.attack(this);
+//            if (getHealth() < 0) {
+//                //Lose
+//            }
             return;
         }
         changeCell(dx, dy);//move
