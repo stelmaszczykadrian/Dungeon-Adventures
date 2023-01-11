@@ -7,15 +7,23 @@ import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.map.MapFromFileLoader;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.io.FileNotFoundException;
 
 public class Main extends Application {
 
@@ -34,16 +42,110 @@ public class Main extends Application {
     Label attackLabel = new Label();
     private Button pickUpButton = new Button("Pick up item");
     private GridPane mainLootGrid = new GridPane();
-
+    Stage stage;
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.stage = primaryStage;
+        mainMenu(primaryStage);
+    }
+
+    public void preGameSettings(Stage primaryStage) throws FileNotFoundException {
+        ImageView selectedImage = new ImageView();
+        Image image1 = new Image(Main.class.getResourceAsStream("/fdc.png"));
+        selectedImage.setImage(image1);
+        HBox gameLogo = new HBox(selectedImage);
+        Button startButton = new Button("Start the Game");
+        Button backButton = new Button("Back to Menu");
+        startButton.setId("allbtn");
+        backButton.setId("allbtn");
+        HBox buttons = new HBox(backButton, startButton);
+        Text championNameLabel = new Text("Enter Your Name");
+        championNameLabel.setId("text");
+        TextField textField = new TextField();
+        textField.setId("input");
+        VBox settingsLayout = new VBox(championNameLabel, textField, buttons);
+        settingsLayout.setAlignment(Pos.CENTER);
+        startButton.addEventFilter(MouseEvent.MOUSE_CLICKED, (e) -> {
+            try {
+                map.getPlayer().setName(textField.getText());
+                gameStart(primaryStage);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+        backButton.addEventFilter(MouseEvent.MOUSE_CLICKED, (e) -> {
+            try {
+                mainMenu(primaryStage);
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
+        });
+        gameLogo.setAlignment(Pos.CENTER);
+        HBox.setMargin(selectedImage, new Insets(50, 0, 0, 0));
+        settingsLayout.setSpacing(25);
+        BorderPane menuLayout = new BorderPane();
+        menuLayout.setBackground(new Background(new BackgroundFill(Color.rgb(71, 45, 60), CornerRadii.EMPTY, Insets.EMPTY)));
+        menuLayout.setPrefWidth(1000);
+        menuLayout.setPrefHeight(672);
+        menuLayout.setTop(gameLogo);
+        menuLayout.setCenter(settingsLayout);
+        HBox.setMargin(backButton, new Insets(10, 10, 10, 10));
+        buttons.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(menuLayout);
+        scene.getStylesheets().add("style.css");
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Dungeon Crawl");
+        primaryStage.show();
+    }
+
+    public void mainMenu(Stage primaryStage) throws FileNotFoundException, RuntimeException {
+        ImageView selectedImage = new ImageView();
+        Image image1 = new Image(Main.class.getResourceAsStream("/fdc.png"));
+        selectedImage.setImage(image1);
+        HBox gameLogo = new HBox(selectedImage);
+        Button startGameButton = new Button("New Adventure");
+        Button exitGameButton = new Button("Exit Game");
+        startGameButton.setId("allbtn");
+        exitGameButton.setId("allbtn");
+        startGameButton.addEventFilter(MouseEvent.MOUSE_CLICKED, (e) -> {
+            try {
+                preGameSettings(primaryStage);
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
+        });
+        exitGameButton.addEventFilter(MouseEvent.MOUSE_CLICKED, (e) -> {
+            System.exit(0);
+        });
+
+        VBox buttons = new VBox(startGameButton,exitGameButton);
+        gameLogo.setAlignment(Pos.CENTER);
+        HBox.setMargin(selectedImage, new Insets(50, 0, 0, 0));
+        buttons.setAlignment(Pos.CENTER);
+        buttons.setSpacing(10);
+        BorderPane menuLayout = new BorderPane();
+        menuLayout.setCenter(buttons);
+        menuLayout.setTop(gameLogo);
+        menuLayout.setBackground(new Background(new BackgroundFill(Color.rgb(71, 45, 60), CornerRadii.EMPTY, Insets.EMPTY)));
+        menuLayout.setPrefWidth(1000);
+        menuLayout.setPrefHeight(672);
+        Scene scene = new Scene(menuLayout);
+        scene.getStylesheets().add("style.css");
+
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Dungeon Crawl");
+        primaryStage.show();
+    }
+
+    public void gameStart(Stage primaryStage) throws Exception{
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
+        ui.setBackground(new Background(new BackgroundFill(Color.rgb(0, 59, 59), CornerRadii.EMPTY, Insets.EMPTY)));
 
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
@@ -61,16 +163,13 @@ public class Main extends Application {
         });
 
         BorderPane borderPane = new BorderPane();
-
         borderPane.setCenter(canvas);
         borderPane.setRight(ui);
-        hideButton();
 
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
-
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
     }
