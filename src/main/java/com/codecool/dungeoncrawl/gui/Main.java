@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.map.MapFromFileLoader;
+import com.codecool.dungeoncrawl.logic.map.OutOfMapCell;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -23,24 +24,25 @@ public class Main extends Application {
     MapFromFileLoader mapFromFileLoader = new MapFromFileLoader();
     GameMap map = mapFromFileLoader.loadMap(this,fileName);
 
-    int width = 10;
-    int height = 10;
+    int radiusX = 8;
+    int radiusY = 5;
+
     Canvas canvas = new Canvas(
-            width*2.1* Tiles.TILE_WIDTH,
-            height*2.1 * Tiles.TILE_WIDTH);
+            (radiusX * 2 + 1) * Tiles.TILE_WIDTH,
+            (radiusY * 2 + 1)  * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     GraphicsContext context2 = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
     Label attackLabel = new Label();
-    private Button pickUpButton = new Button("Pick up item");
-    private GridPane mainLootGrid = new GridPane();
+    private final Button pickUpButton = new Button("Pick up item");
+    private final GridPane mainLootGrid = new GridPane();
 
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage){
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
@@ -122,22 +124,22 @@ public class Main extends Application {
     private void reLoadCanvas() {
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         Player player = map.getPlayer();
-        for (int x = player.getX() - width; x <= player.getX() + width; x++) {
-            for (int y = player.getY() - height  ; y <= player.getY() + height; y++) {
-                int canvaX = x - player.getX() + width;
-                int canvaY = y - player.getY() + height;
-                if (0 <= x && x < map.getWidth() && 0 <= y && y < map.getHeight()){
-                    Cell cellToDraw = map.getCell(x, y);
+        for (int X = 0; X <= 2 * radiusX; X++) {
+            for (int Y = 0; Y <= 2 * radiusY; Y++) {
+                int mapX = X + player.getX() - radiusX;
+                int mapY = Y + player.getY() - radiusY;
+                if (0 <= mapX && mapX < map.getWidth() && 0 <= mapY && mapY < map.getHeight()){
+                    Cell cellToDraw = map.getCell(mapX, mapY);
                     if (cellToDraw.getActor() != null) {
-                        Tiles.drawTile(context, cellToDraw.getActor(), canvaX, canvaY);
+                        Tiles.drawTile(context, cellToDraw.getActor(), X, Y);
                     }
                     else if (cellToDraw.getItem() != null){
-                        Tiles.drawTile(context, cellToDraw.getItem(), canvaX, canvaY);
+                        Tiles.drawTile(context, cellToDraw.getItem(), X, Y);
                     } else {
-                        Tiles.drawTile(context, cellToDraw, canvaX, canvaY);
+                        Tiles.drawTile(context, cellToDraw, X, Y);
                     }
                 } else {
-                    Tiles.drawTile(context, new Cell(), canvaX, canvaY);
+                    Tiles.drawTile(context, new OutOfMapCell(), X, Y);
                 }
             }
         }
