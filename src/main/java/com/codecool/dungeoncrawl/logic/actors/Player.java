@@ -24,8 +24,8 @@ public class Player extends Actor {
     public void move(int dx ,int dy) {
         GameMap map = cell.getGameMap();
         Cell object = map.getCell(map.getPlayer().getX() + dx, map.getPlayer().getY() + dy);
-        System.out.println(map.getCell(map.getPlayer().getX() + dx, map.getPlayer().getY() + dy).getType());
-        System.out.println(cell.getGameMap().getObstacles());
+//        System.out.println(map.getCell(map.getPlayer().getX() + dx, map.getPlayer().getY() + dy).getType());
+//        System.out.println(cell.getGameMap().getObstacles());
         //check we have key if yes open door
         Door.tryOpen(dx, dy, map, items);
         Stairs.goDown(dx, dy, cell);

@@ -102,24 +102,27 @@ public class Main extends Application {
         if (map.getPlayer().getY()+down > map.getHeight()) {
             down = map.getHeight()-map.getPlayer().getY();
         }
-        System.out.println(left);
-        System.out.println(right);
-        System.out.println(up);
-        System.out.println(down);
+//        System.out.println(left);
+//        System.out.println(right);
+//        System.out.println(up);
+//        System.out.println(down);
 //
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        System.out.println((map.getPlayer().getX())+ " " + (map.getPlayer().getY()));
         for (int x = -left; x < right; x++) {
             for (int y = -up; y < down; y++) {
                 Cell cell = map.getCell(map.getPlayer().getX()+x,map.getPlayer().getY()+y);
-                if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), map.getPlayer().getX()+x, map.getPlayer().getY()+y);
-                }
-                else if (cell.getItem() != null){
-                        Tiles.drawTile(context, cell.getItem(), map.getPlayer().getX()+x, map.getPlayer().getY()+y);
-                } else {
-                    Tiles.drawTile(context, cell, x, y);
-                }
+
+                System.out.println((map.getPlayer().getX()+x)+ " " + (map.getPlayer().getY()+y));
+//                if (cell.getActor() != null) {
+//                    Tiles.drawTile(context, cell.getActor(), map.getPlayer().getX()+x, map.getPlayer().getY()+y);
+//                }
+//                else if (cell.getItem() != null){
+//                        Tiles.drawTile(context, cell.getItem(), map.getPlayer().getX()+x, map.getPlayer().getY()+y);
+//                } else {
+//                    Tiles.drawTile(context, cell, x, y);
+//                }
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
