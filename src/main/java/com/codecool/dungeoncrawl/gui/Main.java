@@ -1,10 +1,10 @@
 package com.codecool.dungeoncrawl.gui;
 
 import com.codecool.dungeoncrawl.logic.actors.Actor;
-import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.map.MapFromFileLoader;
+import com.codecool.dungeoncrawl.logic.map.OutOfMapCell;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -31,8 +31,8 @@ public class Main extends Application {
     MapFromFileLoader mapFromFileLoader = new MapFromFileLoader();
     GameMap map = mapFromFileLoader.loadMap(this,fileName);
 
-    int radiusX = 8;
-    int radiusY = 5;
+    int radiusX = 10;
+    int radiusY = 10;
 
     Canvas canvas = new Canvas(
             (radiusX * 2 + 1) * Tiles.TILE_WIDTH,
@@ -89,7 +89,7 @@ public class Main extends Application {
         HBox.setMargin(selectedImage, new Insets(50, 0, 0, 0));
         settingsLayout.setSpacing(25);
         BorderPane menuLayout = new BorderPane();
-        menuLayout.setBackground(new Background(new BackgroundFill(Color.rgb(71, 45, 60), CornerRadii.EMPTY, Insets.EMPTY)));
+        menuLayout.setBackground(new Background(new BackgroundFill(Color.rgb(71, 45, 60), CornerRadii.EMPTY, Insets.EMPTY)));/////////////trzeba ustalić kolor
         menuLayout.setPrefWidth(1000);
         menuLayout.setPrefHeight(672);
         menuLayout.setTop(gameLogo);
