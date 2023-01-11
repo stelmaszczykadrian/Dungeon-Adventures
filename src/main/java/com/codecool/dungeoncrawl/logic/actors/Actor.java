@@ -26,7 +26,7 @@ public abstract class Actor implements Drawable {
             System.out.println(enemy.getClass().getSimpleName() + " : " + enemy.health);
         }
     }
-    }
+
 
     public void fight(Actor enemy) {
         System.out.println(this.getClass().getSimpleName() + " vs " + enemy.getClass().getSimpleName());
