@@ -33,7 +33,7 @@ import java.util.List;
 public class Main extends Application {
     MapFromFileLoader mapFromFileLoader = new MapFromFileLoader();
     List<GameMap> maps = new ArrayList<>();
-    List<String> nameMaps = Arrays.asList("/map.txt","/map2.txt");
+    List<String> nameMaps = Arrays.asList("/map.txt","/map2.txt","/map3.txt");
 
     int level;
     GameMap map;
@@ -167,7 +167,7 @@ public class Main extends Application {
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
-//        ui.setBackground(new Background(new BackgroundFill(Color.rgb(0, 59, 59), CornerRadii.EMPTY, Insets.EMPTY)));
+        ui.setBackground(new Background(new BackgroundFill(Color.rgb(0, 59, 59), CornerRadii.EMPTY, Insets.EMPTY)));
 
 
         ui.add(healthLabelText, 0, 0);
@@ -316,6 +316,7 @@ public class Main extends Application {
         this.level ++;
         if(level >=maps.size()){
             GameMap newmap = mapFromFileLoader.loadMap(this, nameMaps.get(level));
+            System.out.println("tak");
             addMap(newmap);
         }
         this.map =maps.get(level);
