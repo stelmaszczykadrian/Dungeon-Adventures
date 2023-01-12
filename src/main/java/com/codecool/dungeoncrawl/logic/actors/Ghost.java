@@ -43,8 +43,8 @@ public class Ghost extends Actor {
             x = random.nextInt(width);
             y = random.nextInt(height);
         } while (map.getCell(x, y).getActor() != null
-                && map.getCell(x, y).getItem() != null
-                && CellType.FLOOR.equals(map.getCell(x, y).getType()));
+                || map.getCell(x, y).getItem() != null
+                || !CellType.FLOOR.equals(map.getCell(x, y).getType()));
         changeCell(x - cell.getX(), y - cell.getY());
     }
 
