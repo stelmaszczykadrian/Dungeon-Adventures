@@ -39,7 +39,8 @@ public class Tiles {
         tileMap.put("stairsDown", new Tile(4, 6));
         tileMap.put("stairsUp", new Tile(4, 7));
         tileMap.put("potion", new Tile(16, 25));
-        tileMap.put("belfry", new Tile(11, 24));
+        tileMap.put("win", new Tile(12, 24));
+        tileMap.put("crown", new Tile(11, 24));
         tileMap.put("boss", new Tile(30, 6));
     }
 

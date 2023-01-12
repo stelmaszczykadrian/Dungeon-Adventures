@@ -121,7 +121,7 @@ public class Main extends Application {
         Scene scene = new Scene(menuLayout);
         scene.getStylesheets().add("style.css");
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Frost Dungeon Crawl");
+        primaryStage.setTitle("Dungeon Adventures");
         primaryStage.show();
     }
 
@@ -160,7 +160,7 @@ public class Main extends Application {
         scene.getStylesheets().add("style.css");
 
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Frost Dungeon Crawl");
+        primaryStage.setTitle("Dungeon Adventures");
         primaryStage.show();
     }
     public Stage EndGame(Stage primaryStage,String stage) throws FileNotFoundException, RuntimeException {
@@ -245,7 +245,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
-        primaryStage.setTitle("Frost Dungeon Crawl");
+        primaryStage.setTitle("Dungeon Adventures");
         primaryStage.show();
     }
 
