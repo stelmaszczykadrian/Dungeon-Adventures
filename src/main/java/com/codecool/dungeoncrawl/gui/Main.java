@@ -5,7 +5,7 @@ import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
-import com.codecool.dungeoncrawl.logic.map.MapFromFileLoader;
+import com.codecool.dungeoncrawl.logic.map.MapLoader;
 import com.codecool.dungeoncrawl.logic.map.OutOfMapCell;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -33,7 +33,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Main extends Application {
-    MapFromFileLoader mapFromFileLoader = new MapFromFileLoader();
+    MapLoader mapFromFileLoader = new MapLoader();
     List<GameMap> maps = new ArrayList<>();
     List<String> nameMaps = Arrays.asList("/map.txt","/win.txt","/map2.txt","/map3.txt");
 
