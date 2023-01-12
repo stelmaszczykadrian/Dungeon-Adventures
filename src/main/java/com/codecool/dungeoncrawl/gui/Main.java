@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.gui;
 
+import com.codecool.dungeoncrawl.App;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.map.Cell;
@@ -12,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -33,7 +35,7 @@ import java.util.List;
 public class Main extends Application {
     MapFromFileLoader mapFromFileLoader = new MapFromFileLoader();
     List<GameMap> maps = new ArrayList<>();
-    List<String> nameMaps = Arrays.asList("/map.txt","/map2.txt","/map3.txt");
+    List<String> nameMaps = Arrays.asList("/map.txt","/win.txt","/map2.txt","/map3.txt");
 
     int level;
     GameMap map;
@@ -57,6 +59,7 @@ public class Main extends Application {
     Label firstSeparatorLabel = new Label();
     Label secondSeparatorLabel = new Label();
     private Button pickUpButton = new Button("Pick up item");
+    private Button endButton = new Button("Back to manu");
     private GridPane mainLootGrid = new GridPane();
     Stage stage;
 
@@ -120,7 +123,7 @@ public class Main extends Application {
         Scene scene = new Scene(menuLayout);
         scene.getStylesheets().add("style.css");
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Dungeon Crawl");
+        primaryStage.setTitle("Frost Dungeon Crawl");
         primaryStage.show();
     }
 
@@ -159,11 +162,12 @@ public class Main extends Application {
         scene.getStylesheets().add("style.css");
 
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Dungeon Crawl");
+        primaryStage.setTitle("Frost Dungeon Crawl");
         primaryStage.show();
     }
 
     public void gameStart(Stage primaryStage) throws Exception{
+
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
@@ -197,6 +201,7 @@ public class Main extends Application {
             refresh();
         });
 
+
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(canvas);
         borderPane.setRight(ui);
@@ -205,7 +210,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
-        primaryStage.setTitle("Dungeon Crawl");
+        primaryStage.setTitle("Frost Dungeon Crawl");
         primaryStage.show();
     }
 
@@ -228,7 +233,6 @@ public class Main extends Application {
     }
 
     private void showAndHidePickUpButton() {
-        map.getMobs().forEach(Actor::move);
         if (map.getPlayer().getCell().isItemOnCell()) {
             showPickButton();
             pickUpButton.setOnAction(actionEvent ->  {
@@ -244,6 +248,7 @@ public class Main extends Application {
 
 
     private void refresh() {
+        map.getMobs().forEach(Actor::move);
         showAndHidePickUpButton();
         map.removeDeadMobs();
         checkPlayerIsDead();
@@ -277,8 +282,12 @@ public class Main extends Application {
 
     private void checkPlayerIsDead() {
         if (map.getPlayer().getHealth() <= 0) {
-            System.exit(0);
+//            lostGame.showAndWait();
         }
+    }
+
+    public void win() {
+//        winGame.showAndWait();
     }
 
     private void drawLoot() {
@@ -311,18 +320,17 @@ public class Main extends Application {
     public void addMap(GameMap map) {
         maps.add(map);
     }
-
     public void nextLevel(){
         this.level ++;
         if(level >=maps.size()){
             GameMap newmap = mapFromFileLoader.loadMap(this, nameMaps.get(level));
-            System.out.println("tak");
             addMap(newmap);
         }
         this.map =maps.get(level);
         Player player = maps.get(level-1).getPlayer();
         map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName());
     }
+
     public void previousLevel(){
         this.level --;
         this.map =maps.get(level);
