@@ -44,6 +44,9 @@ public class MapLoader {
                         case 'H':
                             cell.setType(CellType.STAIRSUP);
                             break;
+                        case 'w':
+                            cell.setType(CellType.BELFRY);
+                            break;
                         case 'b':
                             cell.setType(CellType.FLOOR);
                             new Backbone(cell);
@@ -63,7 +66,6 @@ public class MapLoader {
                         case 'd':
                             cell.setType(CellType.FLOOR);
                             new Defender(cell);
-//                            new Shield(cell);
                             new HealthPotion(cell);
                             break;
                         case 'l':
