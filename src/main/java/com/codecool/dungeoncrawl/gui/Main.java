@@ -37,12 +37,12 @@ public class Main extends Application {
     GameMap map;
 
 
-    int radiusX = 10;
-    int radiusY = 10;
+    int width = 21;
+    int height = 21;
 
     Canvas canvas = new Canvas(
-            (radiusX * 2 + 1) * Tiles.TILE_WIDTH,
-            (radiusY * 2 + 1)  * Tiles.TILE_WIDTH);
+            width * Tiles.TILE_WIDTH,
+            height  * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     GraphicsContext context2 = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
@@ -233,8 +233,8 @@ public class Main extends Application {
 
     private void reLoadCanvas() {
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int x = 0; x <= 2 * radiusX; x++) {
-            for (int y = 0; y <= 2 * radiusY; y++) {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y <= 2 * height; y++) {
                 drawTile(x, y);
             }
         }
@@ -243,8 +243,8 @@ public class Main extends Application {
     }
 
     private void drawTile(int x, int y) {
-        int mapX = x + map.getPlayer().getX() - radiusX;
-        int mapY = y + map.getPlayer().getY() - radiusY;
+        int mapX = x + map.getPlayer().getX() - width / 2;
+        int mapY = y + map.getPlayer().getY() - height / 2;
         if (0 <= mapX && mapX < map.getWidth() && 0 <= mapY && mapY < map.getHeight()){
             Cell cell = map.getCell(mapX, mapY);
             if (cell.getActor() != null) Tiles.drawTile(context, cell.getActor(), x, y);
