@@ -7,9 +7,11 @@ import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class Player extends Actor {
+    private  static final List<String> NAMES = List.of("piotr", "adrian", "galyna", "karolina");
     String name;
 
     ArrayList<Item> items = new ArrayList<>();
@@ -23,18 +25,18 @@ public class Player extends Actor {
 
     public void move(int dx, int dy) {
         GameMap map = cell.getGameMap();
-        Cell object = map.getCell(map.getPlayer().getX() + dx, map.getPlayer().getY() + dy);
+        if (!cell.hasNeighbor(dx, dy)) return;
+        Cell neighbor = cell.getNeighbor(dx, dy);
         //check we have key if yes open door
         Door.tryOpen(dx, dy, map, items);
         Stairs.goDown(dx, dy, cell);
         //check object is in collidlist
-        if (map.getObstacles().contains(object.getType())&& !name.equalsIgnoreCase("piotr")) return;
-        //check is enemies
-        if (object.getActor() != null) {
-            Actor enemy = object.getActor();
+        if (map.getObstacles().contains(neighbor.getType()) && !NAMES.contains(name)) return;
+        if (neighbor.getActor() != null) {
+            Actor enemy = neighbor.getActor();
             fight(enemy);
         }
-        changeCell(dx, dy);//move
+        changeCell(dx, dy);
     }
 
 
