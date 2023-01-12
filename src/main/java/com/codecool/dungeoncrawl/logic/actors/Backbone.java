@@ -24,12 +24,13 @@ public class Backbone extends Actor {
         GameMap map = cell.getGameMap();
         Player player = map.getPlayer();
         Cell playerCell = player.cell;
+
         List<int[]> steps = getSteps();
         List<int[]> filteredSteps = steps.stream().filter(d -> cell.hasNeighbor(d[0], d[1]))
                         .filter(d -> GROUND.contains(cell.getNeighbor(d[0], d[1]).getType()))
                         .filter(d -> playerCell.equals(cell.getNeighbor(d[0], d[1])) || cell.getNeighbor(d[0], d[1]).getActor() == null)
                         .collect(Collectors.toList());
-        System.out.println(filteredSteps);
+
         if(filteredSteps.size() > 0){
             int[] step = filteredSteps.get(random.nextInt(filteredSteps.size()));
             Cell next = cell.getNeighbor(step[0], step[1]);
@@ -37,7 +38,6 @@ public class Backbone extends Actor {
             else fight(player);
         }
     }
-
 
 
     private List<int[]> getSteps() {
@@ -56,7 +56,6 @@ public class Backbone extends Actor {
         for (int i = x - searchRadius; i <= x + searchRadius ; i++) {
             for (int j = y - searchRadius; j <= y + searchRadius; j++) {
                 if (cell.getGameMap().areCoordsOnMap(i, j) && cell.getGameMap().isPlayerOnCoords(i, j)){
-                    System.out.println("Backbone found player dx =  " + (i - x) + " dy = " + (j - y));
                     int dx = (int) Math.signum(i - x);
                     int dy = (int) Math.signum(j - y);
                     if (dx * dy == 0) return List.of(new int[] {dx, dy});
