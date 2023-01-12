@@ -41,12 +41,12 @@ public class Main extends Application {
     String FONT_COLOR = "white";
     String BOLD_FONT = "-fx-font-weight: bold";
 
-    int width = 21;
-    int height = 21;
+    static final int WIDTH = 21;
+    static final int HEIGHT = 21;
 
     Canvas canvas = new Canvas(
-            width * Tiles.TILE_WIDTH,
-            height  * Tiles.TILE_WIDTH);
+            WIDTH * Tiles.TILE_WIDTH,
+            HEIGHT * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     GraphicsContext context2 = canvas.getGraphicsContext2D();
     Label healthLabelText = new Label("Health: ");
@@ -254,8 +254,8 @@ public class Main extends Application {
 
     private void reLoadCanvas() {
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
+        for (int x = 0; x < WIDTH; x++) {
+            for (int y = 0; y < HEIGHT; y++) {
                 drawTile(x, y);
             }
         }
@@ -264,8 +264,8 @@ public class Main extends Application {
     }
 
     private void drawTile(int x, int y) {
-        int mapX = x + map.getPlayer().getX() - width / 2;
-        int mapY = y + map.getPlayer().getY() - height / 2;
+        int mapX = x + map.getPlayer().getX() - WIDTH / 2;
+        int mapY = y + map.getPlayer().getY() - HEIGHT / 2;
         if (0 <= mapX && mapX < map.getWidth() && 0 <= mapY && mapY < map.getHeight()){
             Cell cell = map.getCell(mapX, mapY);
             if (cell.getActor() != null) Tiles.drawTile(context, cell.getActor(), x, y);
