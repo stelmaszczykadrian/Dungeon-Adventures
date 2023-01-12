@@ -1,6 +1,5 @@
 package com.codecool.dungeoncrawl.gui;
 
-import com.codecool.dungeoncrawl.App;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.map.Cell;
@@ -13,7 +12,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -35,7 +33,7 @@ import java.util.List;
 public class Main extends Application {
     MapLoader mapFromFileLoader = new MapLoader();
     List<GameMap> maps = new ArrayList<>();
-    List<String> nameMaps = Arrays.asList("/map.txt","/win.txt","/map2.txt","/map3.txt");
+    List<String> nameMaps = Arrays.asList("/map.txt","/map2.txt","/map3.txt","/win.txt");
 
     int level;
     GameMap map;
@@ -80,7 +78,7 @@ public class Main extends Application {
 
     public void preGameSettings(Stage primaryStage) throws FileNotFoundException {
         ImageView selectedImage = new ImageView();
-        Image image1 = new Image(Main.class.getResourceAsStream("/fdc.png"));
+        Image image1 = new Image(Main.class.getResourceAsStream("/logo.png"));
         selectedImage.setImage(image1);
         HBox gameLogo = new HBox(selectedImage);
         Button startButton = new Button("Start the Game");
@@ -129,7 +127,7 @@ public class Main extends Application {
 
     public void mainMenu(Stage primaryStage) throws FileNotFoundException, RuntimeException {
         ImageView selectedImage = new ImageView();
-        Image image1 = new Image(Main.class.getResourceAsStream("/fdc.png"));
+        Image image1 = new Image(Main.class.getResourceAsStream("/logo.png"));
         selectedImage.setImage(image1);
         HBox gameLogo = new HBox(selectedImage);
         Button startGameButton = new Button("New Adventure");
@@ -164,6 +162,43 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Frost Dungeon Crawl");
         primaryStage.show();
+    }
+    public Stage EndGame(Stage primaryStage,String stage) throws FileNotFoundException, RuntimeException {
+        ImageView selectedImage = new ImageView();
+        Image image1 = new Image(Main.class.getResourceAsStream(stage));
+        selectedImage.setImage(image1);
+        HBox gameLogo = new HBox(selectedImage);
+        Button restartGameButton = new Button("Restart");
+        restartGameButton.setId("allbtn");
+        restartGameButton.addEventFilter(MouseEvent.MOUSE_CLICKED, (e) -> {
+            try {
+                maps = new ArrayList<>();
+                level = 0;
+                maps.add(mapFromFileLoader.loadMap(this,nameMaps.get(level)));
+                map = maps.get(level);
+                mainMenu(primaryStage);
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
+        });
+        VBox buttons = new VBox(restartGameButton);
+        gameLogo.setAlignment(Pos.CENTER);
+        HBox.setMargin(selectedImage, new Insets(50, 0, 0, 0));
+        buttons.setAlignment(Pos.CENTER);
+        buttons.setSpacing(10);
+        BorderPane menuLayout = new BorderPane();
+        menuLayout.setCenter(buttons);
+        menuLayout.setTop(gameLogo);
+        menuLayout.setBackground(new Background(new BackgroundFill(Color.rgb(71, 45, 60), CornerRadii.EMPTY, Insets.EMPTY)));
+        menuLayout.setPrefWidth(1000);
+        menuLayout.setPrefHeight(672);
+        Scene scene = new Scene(menuLayout);
+        scene.getStylesheets().add("style.css");
+
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Frost Dungeon Crawl");
+        primaryStage.show();
+        return primaryStage;
     }
 
     public void gameStart(Stage primaryStage) throws Exception{
@@ -282,12 +317,20 @@ public class Main extends Application {
 
     private void checkPlayerIsDead() {
         if (map.getPlayer().getHealth() <= 0) {
-//            lostGame.showAndWait();
+            try {
+                stage = EndGame(stage,"/gameover.png");
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     public void win() {
-//        winGame.showAndWait();
+       try {
+                stage = EndGame(stage,"/win.png");
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
     }
 
     private void drawLoot() {
