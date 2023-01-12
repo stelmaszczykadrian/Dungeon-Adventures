@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.gui;
 
 import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.map.MapFromFileLoader;
@@ -158,7 +159,7 @@ public class Main extends Application {
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
-        ui.setBackground(new Background(new BackgroundFill(Color.rgb(0, 59, 59), CornerRadii.EMPTY, Insets.EMPTY)));
+//        ui.setBackground(new Background(new BackgroundFill(Color.rgb(0, 59, 59), CornerRadii.EMPTY, Insets.EMPTY)));
 
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
@@ -292,13 +293,17 @@ public class Main extends Application {
     public void nextLevel(){
         this.level ++;
         if(level >=maps.size()){
-            GameMap map = mapFromFileLoader.loadMap(this, nameMaps.get(level));
-            addMap(map);
+            GameMap newmap = mapFromFileLoader.loadMap(this, nameMaps.get(level));
+            addMap(newmap);
         }
         this.map =maps.get(level);
+        Player player = maps.get(level-1).getPlayer();
+        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName());
     }
     public void previousLevel(){
         this.level --;
         this.map =maps.get(level);
+        Player player = maps.get(level+1).getPlayer();
+        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName());
     }
 }
