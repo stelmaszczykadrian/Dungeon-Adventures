@@ -1,10 +1,7 @@
 package com.codecool.dungeoncrawl.logic.map;
 
 import com.codecool.dungeoncrawl.gui.Main;
-import com.codecool.dungeoncrawl.logic.actors.Defender;
-import com.codecool.dungeoncrawl.logic.actors.Ghost;
-import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.logic.actors.Backbone;
+import com.codecool.dungeoncrawl.logic.actors.*;
 import com.codecool.dungeoncrawl.logic.items.HealthPotion;
 import com.codecool.dungeoncrawl.logic.items.Key;
 import com.codecool.dungeoncrawl.logic.items.Axe;
@@ -45,7 +42,10 @@ public class MapLoader {
                             cell.setType(CellType.STAIRSUP);
                             break;
                         case 'w':
-                            cell.setType(CellType.BELFRY);
+                            cell.setType(CellType.WIN);
+                            break;
+                        case 'c':
+                            cell.setType(CellType.FAKEWIN);
                             break;
                         case 'b':
                             cell.setType(CellType.FLOOR);
@@ -54,6 +54,10 @@ public class MapLoader {
                         case 'k':
                             cell.setType(CellType.FLOOR);
                             new Key(cell);
+                            break;
+                        case 'B':
+                            cell.setType(CellType.FLOOR);
+                            new Boss(cell);
                             break;
                         case 'a':
                             cell.setType(CellType.FLOOR);
