@@ -284,6 +284,7 @@ public class Main extends Application {
         int counter = 0;
         int row = 0;
         int column = 0;
+        int TILES_IN_ROW = 4;
         mainLootGrid.getChildren().clear(); //clear the grid
         for (int i = 0; i < map.getPlayer().getInventory().size(); i++) {
             this.canvas = new Canvas(Tiles.TILE_WIDTH, Tiles.TILE_WIDTH);
@@ -292,8 +293,8 @@ public class Main extends Application {
             Tiles.drawTile(context2, map.getPlayer().getInventory().get(i), 0, 0);
             mainLootGrid.add(canvas, column, row);
             counter += 1;
-            row = counter / 4;
-            column = counter % 4;
+            row = counter / TILES_IN_ROW;
+            column = counter % TILES_IN_ROW;
         }
     }
 
