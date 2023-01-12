@@ -31,15 +31,6 @@ public class GameMap {
         return cells[x][y];
     }
 
-
-    public Cell[][] getCells() {
-        return cells;
-    }
-
-    public void setCells(Cell[][] cells) {
-        this.cells = cells;
-    }
-
     public void setPlayer(Player player) {
         this.player = player;
     }
@@ -86,5 +77,14 @@ public class GameMap {
 
     public Main getMain() {
         return main;
+    }
+
+    public boolean isPlayerOnCoords(int x, int y){
+        return player.getX() == x && player.getY() == y;
+    }
+
+
+    public boolean areCoordsOnMap(int i, int j) {
+        return i >= 0 && i < width && j >= 0 && j < height;
     }
 }

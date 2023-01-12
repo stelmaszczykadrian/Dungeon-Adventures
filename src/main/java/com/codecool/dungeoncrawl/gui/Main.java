@@ -21,6 +21,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -37,17 +38,24 @@ public class Main extends Application {
     int level;
     GameMap map;
 
+    int FONT_SIZE = 16;
+    String FONT_COLOR = "white";
+    String BOLD_FONT = "-fx-font-weight: bold";
 
-    int radiusX = 10;
-    int radiusY = 10;
+    static final int WIDTH = 21;
+    static final int HEIGHT = 21;
 
     Canvas canvas = new Canvas(
-            (radiusX * 2 + 1) * Tiles.TILE_WIDTH,
-            (radiusY * 2 + 1)  * Tiles.TILE_WIDTH);
+            WIDTH * Tiles.TILE_WIDTH,
+            HEIGHT * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     GraphicsContext context2 = canvas.getGraphicsContext2D();
+    Label healthLabelText = new Label("Health: ");
     Label healthLabel = new Label();
+    Label attackLabelText = new Label("Attack: ");
     Label attackLabel = new Label();
+    Label firstSeparatorLabel = new Label();
+    Label secondSeparatorLabel = new Label();
     private Button pickUpButton = new Button("Pick up item");
     private GridPane mainLootGrid = new GridPane();
     Stage stage;
@@ -161,13 +169,26 @@ public class Main extends Application {
         ui.setPadding(new Insets(10));
 //        ui.setBackground(new Background(new BackgroundFill(Color.rgb(0, 59, 59), CornerRadii.EMPTY, Insets.EMPTY)));
 
-        ui.add(new Label("Health: "), 0, 0);
+
+        ui.add(healthLabelText, 0, 0);
+        healthLabelText.setTextFill(Color.web(FONT_COLOR));
+        healthLabelText.setFont(new Font(FONT_SIZE));
+        healthLabelText.setStyle(BOLD_FONT);
         ui.add(healthLabel, 1, 0);
-        ui.add(new Label("Attack: "), 0, 1);
+        healthLabel.setTextFill(Color.web(FONT_COLOR));
+        healthLabel.setFont(new Font(FONT_SIZE));
+        healthLabel.setStyle(BOLD_FONT);
+        ui.add(attackLabelText, 0, 1);
+        attackLabelText.setTextFill(Color.web(FONT_COLOR));
+        attackLabelText.setFont(new Font(FONT_SIZE));
+        attackLabelText.setStyle(BOLD_FONT);
         ui.add(attackLabel, 1, 1);
-        ui.add(new Label(), 0, 4);
+        attackLabel.setTextFill(Color.web(FONT_COLOR));
+        attackLabel.setFont(new Font(FONT_SIZE));
+        attackLabel.setStyle(BOLD_FONT);
+        ui.add(firstSeparatorLabel, 0, 4);
         ui.add(pickUpButton, 0, 7);
-        ui.add(new Label(), 0, 11);
+        ui.add(secondSeparatorLabel, 0, 11);
         lootLayout();
         ui.add(mainLootGrid, 0, 14, 3, 1);
 
@@ -234,8 +255,8 @@ public class Main extends Application {
 
     private void reLoadCanvas() {
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int x = 0; x <= 2 * radiusX; x++) {
-            for (int y = 0; y <= 2 * radiusY; y++) {
+        for (int x = 0; x < WIDTH; x++) {
+            for (int y = 0; y < HEIGHT; y++) {
                 drawTile(x, y);
             }
         }
@@ -244,8 +265,8 @@ public class Main extends Application {
     }
 
     private void drawTile(int x, int y) {
-        int mapX = x + map.getPlayer().getX() - radiusX;
-        int mapY = y + map.getPlayer().getY() - radiusY;
+        int mapX = x + map.getPlayer().getX() - WIDTH / 2;
+        int mapY = y + map.getPlayer().getY() - HEIGHT / 2;
         if (0 <= mapX && mapX < map.getWidth() && 0 <= mapY && mapY < map.getHeight()){
             Cell cell = map.getCell(mapX, mapY);
             if (cell.getActor() != null) Tiles.drawTile(context, cell.getActor(), x, y);
@@ -264,6 +285,7 @@ public class Main extends Application {
         int counter = 0;
         int row = 0;
         int column = 0;
+        int TILES_IN_ROW = 4;
         mainLootGrid.getChildren().clear(); //clear the grid
         for (int i = 0; i < map.getPlayer().getInventory().size(); i++) {
             this.canvas = new Canvas(Tiles.TILE_WIDTH, Tiles.TILE_WIDTH);
@@ -272,8 +294,8 @@ public class Main extends Application {
             Tiles.drawTile(context2, map.getPlayer().getInventory().get(i), 0, 0);
             mainLootGrid.add(canvas, column, row);
             counter += 1;
-            row = counter / 4;
-            column = counter % 4;
+            row = counter / TILES_IN_ROW;
+            column = counter % TILES_IN_ROW;
         }
     }
 

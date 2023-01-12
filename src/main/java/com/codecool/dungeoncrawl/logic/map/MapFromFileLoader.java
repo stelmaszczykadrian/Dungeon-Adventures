@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.actors.Defender;
 import com.codecool.dungeoncrawl.logic.actors.Ghost;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Backbone;
+import com.codecool.dungeoncrawl.logic.items.HealthPotion;
 import com.codecool.dungeoncrawl.logic.items.Key;
 import com.codecool.dungeoncrawl.logic.items.Axe;
 import com.codecool.dungeoncrawl.logic.items.Shield;
@@ -58,10 +59,12 @@ public class MapFromFileLoader implements MapLoader {
                         case 's':
                             cell.setType(CellType.FLOOR);
                             new Shield(cell);
+                            break;
                         case 'd':
                             cell.setType(CellType.FLOOR);
                             new Defender(cell);
-                            new Shield(cell);
+//                            new Shield(cell);
+                            new HealthPotion(cell);
                             break;
                         case 'l':
                             cell.setType(CellType.CLOSE);
