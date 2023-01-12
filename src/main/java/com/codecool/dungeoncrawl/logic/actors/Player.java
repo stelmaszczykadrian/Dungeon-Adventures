@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
+import com.codecool.dungeoncrawl.logic.Objects.Belfry;
 import com.codecool.dungeoncrawl.logic.Objects.Door;
 import com.codecool.dungeoncrawl.logic.Objects.Stairs;
 import com.codecool.dungeoncrawl.logic.map.Cell;
@@ -29,6 +30,7 @@ public class Player extends Actor {
         //check we have key if yes open door
         Door.tryOpen(dx, dy, map, items);
         Stairs.goDown(dx, dy, cell);
+        Belfry.checkWin(dx, dy, cell);
         //check object is in collidlist
         if (map.getObstacles().contains(neighbor.getType())&& !NAMES.contains(name)) {
             return;
