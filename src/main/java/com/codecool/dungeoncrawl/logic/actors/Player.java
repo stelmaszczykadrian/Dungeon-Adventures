@@ -6,11 +6,11 @@ import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 
 public class Player extends Actor {
-    String name;
+    String name="player";
 
     ArrayList<Item> items = new ArrayList<>();
 
@@ -28,13 +28,15 @@ public class Player extends Actor {
         Door.tryOpen(dx, dy, map, items);
         Stairs.goDown(dx, dy, cell);
         //check object is in collidlist
-        if (map.getObstacles().contains(object.getType())&& !name.equalsIgnoreCase("piotr")) return;
+        if (map.getObstacles().contains(object.getType())&& !name.equalsIgnoreCase("piotr")) {
+            return;
+        }
         //check is enemies
         if (object.getActor() != null) {
             Actor enemy = object.getActor();
             fight(enemy);
-        }
-        changeCell(dx, dy);//move
+        }else
+            changeCell(dx, dy);//move
     }
 
 
@@ -61,5 +63,13 @@ public class Player extends Actor {
     public void setName(String name) {
         this.name = name;
     }
-
+    public String getName() {
+        return name;
+    }
+    public void setAttributes(ArrayList<Item> items,int health,int damage,String name){
+        this.health = health;
+        this.damage = damage;
+        this.items = items;
+        this.name = name;
+    }
 }
